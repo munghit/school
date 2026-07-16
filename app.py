@@ -340,42 +340,91 @@ elif page == "🛡️ 보안성 시뮬레이터":
             for name, ok in standards.items(): st.write(f"{'✅' if ok else '❌'} {name}")
         st.markdown("### 🕵️ 공격 성공 가능성 분석")
 
-        attack_probability = max(0,100-score)
-        
-        st.markdown(f"""
+               st.markdown("### 🕵️ 보안 위험도 평가")
+
+        attack_probability=max(0,100-score)
+
+        risk_level="LOW" if attack_probability<30 else "MEDIUM" if attack_probability<70 else "HIGH"
+
+                st.markdown(f"""
         <div style="
-        background:linear-gradient(135deg,#020617,#1e293b);
-        padding:30px;
+        background:linear-gradient(145deg,#020617,#111827);
+        padding:35px;
         border-radius:25px;
-        text-align:center;
-        border:1px solid rgba(56,189,248,0.3);
-        box-shadow:0 0 30px rgba(56,189,248,0.15);
+        border:1px solid rgba(56,189,248,0.25);
+        box-shadow:0 0 35px rgba(56,189,248,0.15);
         ">
         
         <div style="
-        font-size:18px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        ">
+        
+        <div>
+        
+        <p style="
         color:#94a3b8;
+        font-size:16px;
+        margin:0;
         ">
-        Estimated Attack Probability
-        </div>
+        SECURITY RISK ASSESSMENT
+        </p>
         
-        <div style="
-        font-size:65px;
-        font-weight:900;
+        <h1 style="
+        font-size:60px;
+        margin:10px 0;
         color:{color};
-        margin:10px;
         ">
         {attack_probability:.2f}%
+        </h1>
+        
+        <p style="
+        color:#cbd5e1;
+        font-size:18px;
+        ">
+        Estimated Password Compromise Risk
+        </p>
+        
         </div>
         
+        
         <div style="
-        font-size:20px;
+        background:{color};
+        padding:18px 25px;
+        border-radius:15px;
         color:white;
+        font-size:24px;
+        font-weight:900;
         ">
-        잠재적 해킹 성공 가능성
+        {risk_level}
         </div>
+        
+        
+        </div>
+        
+        
+        <hr style="
+        border:0;
+        border-top:1px solid #334155;
+        margin:25px 0;
+        ">
+        
+        
+        <div style="
+        color:#94a3b8;
+        font-size:15px;
+        ">
+        
+        분석 모델 기준<br>
+        • Shannon Entropy 기반 정보량 분석<br>
+        • GPU Brute Force 공격 모델 적용<br>
+        • 문자 집합 크기 및 길이 기반 평가<br>
+        
+        </div>
+        
         
         </div>
         """,unsafe_allow_html=True)
         
-        st.progress(attack_probability/100)
+                st.progress(attack_probability/100)
