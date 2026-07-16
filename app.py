@@ -339,26 +339,44 @@ elif page == "🛡️ 보안성 시뮬레이터":
             standards = {"최소 권장 길이 (8자)": len(password) >= 8, "최적 보안 길이 (12자 이상)": len(password) >= 12, "복합 문자셋 (3종 이상)": sum([any(c.islower() for c in password), any(c.isupper() for c in password), any(c.isdigit() for c in password), any(not c.isalnum() for c in password)]) >= 3}
             for name, ok in standards.items(): st.write(f"{'✅' if ok else '❌'} {name}")
 
-            # 위험도 강조 (소수점 2번째 자리까지)
-        st.markdown("---")
-        st.markdown("### 🕵️ 공격 성공 확률 (위험도)")
+      st.markdown("### 🕵️ 공격 성공 가능성 분석")
 
-        attack_rate = max(0, 100 - score)
+attack_probability = max(0,100-score)
 
-        st.markdown(f"""
+st.markdown(f"""
 <div style="
-background:linear-gradient(135deg,{color},#111827);
-padding:25px;
-border-radius:20px;
+background:linear-gradient(135deg,#020617,#1e293b);
+padding:30px;
+border-radius:25px;
 text-align:center;
-font-size:30px;
-color:white;
-font-weight:900;
-border:1px solid rgba(255,255,255,0.2);
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
+border:1px solid rgba(56,189,248,0.3);
+box-shadow:0 0 30px rgba(56,189,248,0.15);
 ">
-{icon}<br>{level}
+
+<div style="
+font-size:18px;
+color:#94a3b8;
+">
+Estimated Attack Probability
+</div>
+
+<div style="
+font-size:65px;
+font-weight:900;
+color:{color};
+margin:10px;
+">
+{attack_probability:.2f}%
+</div>
+
+<div style="
+font-size:20px;
+color:white;
+">
+잠재적 해킹 성공 가능성
+</div>
+
 </div>
 """,unsafe_allow_html=True)
 
-        st.progress(attack_rate / 100)
+st.progress(attack_probability/100)
