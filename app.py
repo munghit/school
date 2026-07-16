@@ -7,7 +7,15 @@ st.set_page_config(
     layout="wide"
 )
 
+st.sidebar.title("📌 메뉴")
 
+page = st.sidebar.radio(
+    "목차",
+    [
+        "📂 연구 종합 보고서",
+        "🛡️ 보안성 시뮬레이터"
+    ]
+)
 if page == "📂 연구 종합 보고서":
 
     st.title("📂 디지털 보안 연구 종합 보고서")
