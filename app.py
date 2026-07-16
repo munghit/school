@@ -416,10 +416,6 @@ elif page == "🛡️ 보안성 시뮬레이터":
         font-size:15px;
         ">
         
-        분석 모델 기준<br>
-        • Shannon Entropy 기반 정보량 분석<br>
-        • GPU Brute Force 공격 모델 적용<br>
-        • 문자 집합 크기 및 길이 기반 평가<br>
         
         </div>
         
