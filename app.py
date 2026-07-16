@@ -1,68 +1,65 @@
 import streamlit as st
 import math
+import pandas as pd
+import numpy as np
 
-st.set_page_config(page_title="보안성 분석", layout="wide")
+# 페이지 설정
+st.set_page_config(page_title="보안 분석 대시보드", layout="wide")
 
-# 고대비 스타일링 (어두운 배경 + 밝은 텍스트)
+# CSS: 단조로움을 깨는 입체감과 컬러 강조
 st.markdown("""
     <style>
-    /* 전체 배경을 어두운 네이비색으로 */
-    .stApp { background-color: #0f172a; color: #f8fafc; }
-    
-    /* 사이드바 스타일 */
-    [data-testid="stSidebar"] { background-color: #1e293b; }
-    [data-testid="stSidebar"] * { color: #e2e8f0 !important; }
-    
-    /* 카드 스타일 (어두운 배경 위 밝은 회색 카드) */
-    .card { 
-        background-color: #1e293b; 
-        padding: 25px; 
-        border-radius: 12px; 
-        border: 1px solid #334155;
-        margin-bottom: 20px;
-        color: #f1f5f9;
-    }
-    
-    /* 글자색 강제 지정 */
-    h1, h2, h3, p, label, .stMarkdown { color: #f8fafc !important; }
+    .stApp { background-color: #0f172a; }
+    .metric-card { background: linear-gradient(135deg, #1e293b, #334155); padding: 20px; border-radius: 15px; border: 1px solid #475569; }
+    h1 { color: #38bdf8 !important; }
+    h2, h3 { color: #e2e8f0 !important; }
     </style>
 """, unsafe_allow_html=True)
 
-# 사이드바
-st.sidebar.title("📌 연구 탐색")
-page = st.sidebar.radio("목차", ["📂 연구 보고서", "🛡️ 보안성 시뮬레이터"])
+# 1. 사이드바
+st.sidebar.markdown("### 🛠️ 대시보드 메뉴")
+page = st.sidebar.radio("목차", ["📂 연구 프로젝트", "🛡️ 보안 분석 도구"])
 
-# 1. 연구 보고서 페이지
-if page == "📂 연구 보고서":
-    st.title("📂 디지털 보안 연구 보고서")
+if page == "📂 연구 프로젝트":
+    st.title("📂 디지털 보안 엔트로피 분석")
+    st.write("---")
     
-    st.markdown('<div class="card"><h3>🔍 연구 목적</h3>NIST SP 800-63B 가이드라인에 따라, 비밀번호의 엔트로피를 분석하여 사용자의 보안 습관을 정량적으로 개선하는 것을 목표로 합니다.</div>', unsafe_allow_html=True)
+    # [시각적 재미 1] 레이아웃을 이용한 3단 대시보드
+    cols = st.columns(3)
+    cols[0].metric("연구 대상", "비밀번호 보안", "NIST 준수")
+    cols[1].metric("분석 핵심", "엔트로피(Entropy)", "무작위성")
+    cols[2].metric("기반 공격", "Brute Force", "10^10 H/s")
     
-    st.subheader("🛠️ 연구 수행 과정")
-    cols = st.columns(4)
-    steps = [("1. 이론조사", "보안 표준 분석"), ("2. 모델수립", "엔트로피 공식화"), ("3. 알고리즘", "파이썬 연산"), ("4. 시각화", "대시보드 구축")]
-    for i, (t, d) in enumerate(steps):
-        with cols[i]: st.markdown(f"**{t}**\n{d}")
+    st.write("## 📜 연구의 흐름")
+    # [시각적 재미 2] 시각적인 단계별 흐름도
+    st.info("💡 1단계: 문헌 조사 ➔ 2단계: 수학적 모델 구축 ➔ 3단계: 파이썬 알고리즘 구현 ➔ 4단계: 실시간 시뮬레이션")
+    
+    # [시각적 재미 3] 데이터 시각화 차트 (가상 데이터)
+    st.subheader("📊 복잡도에 따른 해킹 난이도 변화")
+    chart_data = pd.DataFrame(np.random.randn(20, 1).cumsum(axis=0), columns=['Security Difficulty'])
+    st.area_chart(chart_data)
 
-    st.subheader("📊 수학적 모델")
-    st.latex(r"\color{white}{E = L \times \log_2(N)}")
-
-# 2. 시뮬레이터 페이지
-elif page == "🛡️ 보안성 시뮬레이터":
-    st.title("🛡️ 보안성 분석 시뮬레이터")
+elif page == "🛡️ 보안 분석 도구":
+    st.title("🛡️ 실시간 보안 분석 엔진")
     
-    password = st.text_input("비밀번호 입력", type="password")
+    # [시각적 재미 4] 입력 창 분할
+    col_input, col_info = st.columns([2, 1])
+    with col_input:
+        password = st.text_input("분석할 비밀번호를 입력하세요:", type="password")
     
     if password:
         entropy = len(password) * math.log2(95)
-        seconds = (2**entropy) / (10**10)
-        years = seconds / 31536000
-        
-        st.markdown(f"### 📈 결과 (엔트로피: {entropy:.1f} bits)")
-        
+        # 결과 대시보드
+        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
         c1, c2 = st.columns(2)
-        c1.metric("예상 해킹 소요 시간", f"{years:.2f}년" if years > 1 else f"{seconds:.1f}초")
+        c1.metric("엔트로피 강도", f"{entropy:.1f} bits")
+        c2.metric("위험도 점수", "High" if entropy < 60 else "Low")
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        if years > 100: st.success("✅ 최고 보안 등급")
-        elif years > 1: st.warning("⚠️ 주의 필요")
-        else: st.error("🚨 즉시 변경 권장")
+        # [시각적 재미 5] 프로그레스 바를 활용한 직관적 피드백
+        st.write("### 보안 수준")
+        st.progress(min(entropy / 100, 1.0))
+        
+        if entropy > 80: st.success("✅ 최고 보안 등급: 해독 불가 수준")
+        elif entropy > 50: st.warning("⚠️ 보통 보안 등급: 문자 조합 추가 권장")
+        else: st.error("🚨 위험: 즉시 변경 권장")
