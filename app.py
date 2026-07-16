@@ -4,52 +4,56 @@ import pandas as pd
 
 st.set_page_config(page_title="보안 연구 대시보드", layout="wide")
 
-# CSS: 단조로움 탈피 (카드 디자인 + 색상 강조)
+# CSS: 디자인 요소 강화
 st.markdown("""
     <style>
     .stApp { background-color: #0f172a; }
-    .hero-card { background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 30px; border-radius: 20px; color: white; margin-bottom: 20px; }
-    .info-box { background-color: #1e293b; padding: 20px; border-radius: 15px; border: 1px solid #334155; }
-    h1, h2, h3 { color: #f8fafc !important; }
+    .section-header { color: #38bdf8; font-size: 1.5rem; font-weight: bold; margin-top: 20px; }
+    .card { background-color: #1e293b; padding: 20px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 15px; }
+    .white-text { color: #f8fafc; }
     </style>
 """, unsafe_allow_html=True)
 
 # 1. 사이드바
 st.sidebar.title("📌 대시보드")
-page = st.sidebar.radio("메뉴", ["📂 연구 보고서", "🛡️ 시뮬레이터"])
+page = st.sidebar.radio("메뉴", ["📂 메인 분석 페이지", "🛡️ 시뮬레이터"])
 
-if page == "📂 연구 보고서":
-    # [시각적 재미] 히어로 섹션
-    st.markdown('<div class="hero-card"><h1>🔍 비밀번호 보안의 수학적 분석</h1><p>무차별 대입 공격(Brute-Force)을 방어하기 위한 정량적 데이터 가이드</p></div>', unsafe_allow_html=True)
+if page == "📂 메인 분석 페이지":
+    st.title("📂 디지털 보안 연구 분석")
     
-    # [본론] 그래프와 내용 분할
-    st.subheader("⚙️ 본론: 왜 비밀번호를 길게 해야 하는가?")
-    col1, col2 = st.columns([1, 1])
+    # --- 서론 ---
+    st.markdown('<div class="section-header">📝 1. 서론 (연구 동기)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="card white-text">온라인 계정 탈취 사고의 80%는 단순한 비밀번호에서 발생합니다. 본 연구는 <b>엔트로피 이론</b>을 통해 비밀번호의 강도를 정량적으로 평가하고, 사용자에게 실질적인 보안 가이드를 제공하고자 합니다.</div>', unsafe_allow_html=True)
+    
+    # --- 본론 ---
+    st.markdown('<div class="section-header">⚙️ 2. 본론 (핵심 분석)</div>', unsafe_allow_html=True)
+    col1, col2 = st.columns([1, 1.5])
     
     with col1:
-        st.markdown('<div class="info-box"><h3>📉 공격 난이도의 지수적 상승</h3>'
-                    '비밀번호가 1글자 늘어날 때마다, 해커가 찾아야 할 경우의 수는 95배씩 늘어납니다. '
-                    '아래 그래프는 <b>비밀번호 길이에 따른 해킹 소요 시간의 폭발적인 증가</b>를 보여줍니다.</div>', unsafe_allow_html=True)
-        
+        st.markdown('<div class="card white-text"><h3>📉 해킹 난이도의 변화</h3>'
+                    '비밀번호가 4자리에서 12자리로 길어질 때, 해커가 뚫어야 할 경우의 수는 <b>지수적으로 급증</b>합니다. '
+                    '옆의 그래프는 길이 증가에 따른 해킹 소요 시간의 폭발적인 증가를 보여줍니다.</div>', unsafe_allow_html=True)
+    
     with col2:
-        # [직관적 그래프] 실제 계산 데이터 대입
-        chart_data = pd.DataFrame({'소요 시간(연산 횟수)': [10**3, 10**6, 10**12, 10**24]}, index=['4자리', '6자리', '8자리', '12자리'])
-        st.bar_chart(chart_data)
-        st.caption("그래프: 12자리 이상이 되었을 때 해킹 소요 시간은 기하급수적으로 증가함")
+        # 데이터프레임 형식 수정 (오류 방지)
+        chart_df = pd.DataFrame({
+            '난이도(연산횟수)': [1000, 1000000, 1000000000, 10000000000000]
+        }, index=['4자리', '6자리', '8자리', '12자리'])
+        st.bar_chart(chart_df)
 
-    # [결론] 아이콘 기반 요약
-    st.subheader("🎯 결론: 핵심 가이드라인")
+    # --- 결론 ---
+    st.markdown('<div class="section-header">🎯 3. 결론 (핵심 요약)</div>', unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
-    c1.metric("권장 길이", "12자리 이상")
-    c2.metric("문자 조합", "특수문자 포함")
-    c3.metric("최종 보안 등급", "Very High")
+    c1.metric("권장 길이", "12자 이상")
+    c2.metric("문자 조합", "특수문자 필수")
+    c3.metric("최종 보안성", "매우 높음")
+    
+    st.markdown('<div class="card white-text">결론적으로 비밀번호는 단순히 복잡하게 만드는 것이 아니라, <b>길이를 확보하는 것이 보안의 핵심</b>입니다.</div>', unsafe_allow_html=True)
 
 elif page == "🛡️ 시뮬레이터":
     st.title("🛡️ 보안성 분석 시뮬레이터")
-    password = st.text_input("분석할 비밀번호 입력", type="password")
-    if password:
-        entropy = len(password) * math.log2(95)
-        # [시각적 재미] 분석 바
-        st.write("### 보안성 게이지")
+    pw = st.text_input("비밀번호 입력", type="password")
+    if pw:
+        entropy = len(pw) * math.log2(95)
+        st.metric("분석된 강도", f"{entropy:.1f} bits")
         st.progress(min(entropy / 100, 1.0))
-        st.metric("계산된 강도", f"{entropy:.1f} bits")
