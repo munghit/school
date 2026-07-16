@@ -47,37 +47,34 @@ if page == "📂 연구 종합 보고서":
         st.bar_chart(df)
 
   # [결론]
+    # [결론] - 전문성 강화 버전
     st.subheader("🎯 3. 결론 (종합적 탐구 결과)")
     
-    # 가독성을 위한 3단 카드 레이아웃
     c1, c2, c3 = st.columns(3)
     
     with c1:
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #38bdf8; height: 100%;">
-            <h4 style="color:#38bdf8;">🛡️ 보안 기술적 측면</h4>
-            길이와 문자셋의 결합을 통한 <b>엔트로피 극대화</b>가 해킹 저항력 향상의 핵심임을 증명함.
+            <h4 style="color:#38bdf8;">⚙️ 암호학적 엔트로피</h4>
+            비밀번호 강도는 <b>비트당 정보량(Entropy density)</b>에 비례함. 문자셋의 집합 크기(Charset size)를 늘리는 것보다, <b>지수적으로 작용하는 길이(Length) 증가</b>가 브루트포스 공격의 계산 복잡도를 비약적으로 상승시킴.
         </div>
         """, unsafe_allow_html=True)
         
     with c2:
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #fbbf24; height: 100%;">
-            <h4 style="color:#fbbf24;">👤 사용자 측면</h4>
-            무분별한 복잡성 요구는 오히려 보안 사고를 유발함. <b>12자리 이상의 적정 길이</b>가 사용성과 보안의 최적점.
+            <h4 style="color:#fbbf24;">🧠 인지 부하 최적화</h4>
+            엄격한 복잡성 규칙(강제된 문자 혼용)은 <b>인지적 마찰(Cognitive friction)</b>을 유발해 사용자 스스로 보안을 우회하게 함. <b>패스프레이즈(Passphrase) 모델</b>은 기억 용량(Working memory) 내에서 충분한 엔트로피를 확보하는 가장 효율적인 인터페이스임.
         </div>
         """, unsafe_allow_html=True)
         
     with c3:
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #22c55e; height: 100%;">
-            <h4 style="color:#22c55e;">📈 최종 결과</h4>
-            현대 컴퓨팅 환경에서 <b>[12자리 + 무작위 조합]</b>은 해독 불가능한 <b>'철통 보안'</b>의 표준임.
+            <h4 style="color:#22c55e;">🛡️ 전략적 보안 통합</h4>
+            최적의 보안은 <b>[기술적 안전성(엔트로피)]</b>과 <b>[행동적 수용성(편의성)]</b> 사이의 균형점임. 12자리 이상의 패스프레이즈는 연산 성능의 발전에도 불구하고, 해독 비용이 계정 탈취 가치를 상회하는 <b>'보안적 경제성'</b>을 확보함.
         </div>
         """, unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-   # [결론 제언] 수정된 부분
     st.info("""
     💡 **핵심 결론**: 무작위 암기 불가능한 비밀번호는 보안 취약점을 만듭니다. 
     현실적인 해결책은 '패스프레이즈(Passphrase)'입니다. 
