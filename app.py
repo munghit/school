@@ -1,3 +1,13 @@
+import streamlit as st
+import math
+import pandas as pd
+
+st.set_page_config(
+    page_title="디지털 보안 연구 보고서",
+    layout="wide"
+)
+
+
 if page == "📂 연구 종합 보고서":
 
     st.title("📂 디지털 보안 연구 종합 보고서")
