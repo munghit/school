@@ -6,12 +6,72 @@ st.set_page_config(page_title="디지털 보안 연구 보고서", layout="wide"
 
 # CSS 스타일링
 st.markdown("""
-    <style>
-    .stApp { background-color: #0f172a; }
-    .card { background-color: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 20px; color: #f8fafc; }
-    .step-box { background-color: #334155; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #38bdf8; }
-    </style>
-""", unsafe_allow_html=True)
+<style>
+.stApp{
+background:linear-gradient(135deg,#020617,#0f172a,#111827);
+color:#e5e7eb;
+}
+h1{
+color:#38bdf8;
+font-weight:800;
+letter-spacing:-1px;
+}
+h2,h3{
+color:#e2e8f0;
+}
+.card{
+background:linear-gradient(145deg,#111827,#1e293b);
+padding:25px;
+border-radius:18px;
+border:1px solid #334155;
+margin-bottom:20px;
+color:#f8fafc;
+box-shadow:0 8px 25px rgba(0,0,0,0.35);
+}
+.step-box{
+background:#172554;
+padding:16px;
+border-radius:12px;
+margin-bottom:12px;
+border-left:5px solid #38bdf8;
+color:#e0f2fe;
+font-weight:600;
+}
+[data-testid="metric-container"]{
+background:linear-gradient(145deg,#111827,#1e293b);
+border-radius:15px;
+padding:18px;
+border:1px solid #334155;
+}
+[data-testid="metric-container"] [data-testid="stMetricValue"]{
+color:#38bdf8;
+font-size:28px;
+font-weight:800;
+}
+.stTextInput input{
+background:#020617;
+color:white;
+border:1px solid #38bdf8;
+border-radius:10px;
+}
+.stProgress>div>div{
+background:linear-gradient(90deg,#2563eb,#22c55e);
+}
+[data-testid="stDataFrame"]{
+border-radius:15px;
+overflow:hidden;
+}
+.stAlert{
+border-radius:15px;
+}
+section[data-testid="stSidebar"]{
+background:linear-gradient(180deg,#020617,#111827);
+}
+section[data-testid="stSidebar"] h1{
+color:#38bdf8;
+}
+</style>
+""",unsafe_allow_html=True)
 
 # 1. 사이드바
 st.sidebar.title("📌 메뉴")
@@ -146,11 +206,20 @@ elif page == "🛡️ 보안성 시뮬레이터":
         
         attack_rate = max(0, 100 - score)
         
-        st.markdown(f"""
-            <div style="text-align: center; padding: 20px;">
-                <h1 style="font-size: 60px; color: {color}; margin: 0;">{attack_rate:.2f}%</h1>
-                <p style="font-size: 20px; font-weight: bold; color: #94a3b8;">잠재적 해킹 침투 가능성</p>
-            </div>
-        """, unsafe_allow_html=True)
+      st.markdown(f"""
+<div style="
+background:linear-gradient(135deg,{color},#111827);
+padding:25px;
+border-radius:20px;
+text-align:center;
+font-size:30px;
+color:white;
+font-weight:900;
+border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
+">
+{icon}<br>{level}
+</div>
+""",unsafe_allow_html=True)
         
         st.progress(attack_rate / 100) 
