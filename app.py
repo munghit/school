@@ -60,14 +60,10 @@ elif page == "🛡️ 보안성 시뮬레이터":
     st.markdown("---")
     
     # 1. 입력 섹션
-    with st.container():
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        password = st.text_input("분석할 비밀번호를 입력하세요 (암호화 처리됨)", type="password")
-        st.markdown('</div>', unsafe_allow_html=True)
+    password = st.text_input("비밀번호 입력", type="password")
     
     if password:
-        # 분석 로직 (엔트로피 계산)
-        # 문자 종류 계산 (대문자, 소문자, 숫자, 특수문자 고려)
+        # 문자셋 계산
         charset_size = 0
         if any(c.islower() for c in password): charset_size += 26
         if any(c.isupper() for c in password): charset_size += 26
@@ -76,37 +72,34 @@ elif page == "🛡️ 보안성 시뮬레이터":
         
         entropy = len(password) * math.log2(charset_size if charset_size > 0 else 1)
         
-        # 해킹 시간 추정 (10^10 H/s 가정)
+        # 2. 결과 시각화 (구체적인 단계형 게이지)
+        st.markdown("### 📊 보안 등급 분석")
+        
+        # 등급별 게이지 로직
+        if entropy < 40:
+            level, color, p_val = "매우 취약", "red", 0.25
+        elif entropy < 70:
+            level, color, p_val = "보통", "orange", 0.50
+        elif entropy < 100:
+            level, color, p_val = "안전", "blue", 0.75
+        else:
+            level, color, p_val = "철통 보안", "green", 1.0
+            
+        # [시각적 재미] 컬러 게이지 UI
+        st.markdown(f"""
+            <div style="background-color: #334155; border-radius: 10px; padding: 5px; height: 30px;">
+                <div style="background-color: {color}; width: {p_val*100}%; height: 100%; border-radius: 10px; transition: width 0.5s;"></div>
+            </div>
+            <p style="text-align: right; color: {color}; font-weight: bold;">현재 상태: {level}</p>
+        """, unsafe_allow_html=True)
+        
+        # 3. 메트릭 대시보드
+        col1, col2 = st.columns(2)
+        col1.metric("엔트로피 강도", f"{entropy:.1f} bits")
+        
         seconds = (2**entropy) / (10**10)
-        
-        # 2. 결과 시각화 (시각적 재미 요소)
-        col1, col2 = st.columns([1, 1])
-        
-        with col1:
-            st.markdown("### 📊 보안 지표 상세")
-            st.metric("엔트로피 강도", f"{entropy:.1f} bits")
-            # 보안 등급에 따른 컬러 프로그레스바
-            progress_val = min(entropy / 120, 1.0)
-            st.write("보안 수준 게이지")
-            st.progress(progress_val)
-            
-            if entropy < 50: st.error("🚨 등급: 매우 취약 (수초 이내 해독)")
-            elif entropy < 80: st.warning("⚠️ 등급: 보통 (복잡도 향상 필요)")
-            else: st.success("✅ 등급: 매우 안전 (해독 불가 수준)")
-            
-        with col2:
-            st.markdown("### ⏱️ 공격 시뮬레이션 예상 시간")
-            # 가독성을 위한 시간 변환
-            if seconds < 60: time_str = f"{seconds:.2f} 초"
-            elif seconds < 3600: time_str = f"{seconds/60:.2f} 분"
-            elif seconds < 86400: time_str = f"{seconds/3600:.2f} 시간"
-            else: time_str = f"{seconds/31536000:.2f} 년"
-            
-            st.metric("예상 해킹 소요 시간", time_str)
-            st.info("※ 가정: 현대적인 GPU 클러스터 기반 무차별 대입 공격 (10^10 H/s)")
-
-        # 3. 추가 조언 카드
-        st.markdown("---")
-        st.markdown('<div class="card"><h4>💡 보안 엔지니어의 조언</h4>'
-                    '입력하신 비밀번호의 엔트로피가 80 bits를 넘지 못한다면, <b>길이를 12자 이상으로 늘리거나 특수문자를 추가</b>하여 '
-                    '경우의 수를 2배 이상 확보하는 것을 강력히 권장합니다.</div>', unsafe_allow_html=True)
+        if seconds < 60: time_str = f"{seconds:.2f} 초"
+        elif seconds < 3600: time_str = f"{seconds/60:.2f} 분"
+        elif seconds < 86400: time_str = f"{seconds/3600:.2f} 시간"
+        else: time_str = f"{seconds/31536000:.2f} 년"
+        col2.metric("예상 해킹 소요 시간", time_str)
