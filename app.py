@@ -55,74 +55,223 @@ if page == "📂 연구 종합 보고서":
                 '<li><b>제언</b>: 보안 시스템 설계 시 사용자에게 단순 복잡성을 강요하기보다, 실효성 있는 <b>"최소 길이 가이드라인"</b>을 우선시하는 정책이 필요함.</li></ul>'
                 '</div>', unsafe_allow_html=True)
 # --- 시뮬레이터 페이지 부분 ---
-import streamlit as st
-import math
+elif page == "🛡️ 보안성 시뮬레이터":
 
-# 페이지 설정
-# CSS: 입체적인 카드 효과, 빛나는 효과, 애니메이션
-st.markdown("""
-    <style>
-    .glass-card {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(10px);
-        padding: 30px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-    }
-    .neon-text { color: #38bdf8; text-shadow: 0 0 10px #38bdf8; }
-    .gauge-container { width: 100%; height: 30px; background: #0f172a; border-radius: 15px; overflow: hidden; border: 1px solid #475569; }
-    .gauge-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
-    </style>
-""", unsafe_allow_html=True)
+    st.title("🛡️ 실시간 보안 강도 분석기")
+    st.markdown("---")
 
-# 시뮬레이터 페이지
-st.title("🛡️ 실시간 보안 강도 분석기")
+    password = st.text_input(
+        "비밀번호 입력",
+        type="password",
+        placeholder="비밀번호를 입력하세요"
+    )
 
-# 입력 섹션
-with st.container():
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    password = st.text_input("비밀번호를 입력하세요:", type="password")
-    
     if password:
-        # 엔트로피 계산 로직
-        charset = sum([26 if any(c.islower() for c in password) else 0,
-                       26 if any(c.isupper() for c in password) else 0,
-                       10 if any(c.isdigit() for c in password) else 0,
-                       33 if any(not c.isalnum() for c in password) else 0])
-        entropy = len(password) * math.log2(charset if charset > 0 else 1)
-        
-        # 등급 설정
-        if entropy < 40: level, color, val = "취약", "#ef4444", 25
-        elif entropy < 70: level, color, val = "보통", "#f59e0b", 50
-        elif entropy < 100: level, color, val = "안전", "#3b82f6", 75
-        else: level, color, val = "철통 보안", "#22c55e", 100
 
-        # 결과 출력
-        col1, col2 = st.columns(2)
-        col1.metric("엔트로피 강도", f"{entropy:.1f} bits")
-        
-        # [시각적 재미] CSS 게이지 바
-        st.markdown(f"""
-            <div style="margin: 20px 0;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span>보안 등급: <b>{level}</b></span>
-                </div>
-                <div class="gauge-container">
-                    <div class="gauge-fill" style="width: {val}%; background-color: {color};"></div>
-                </div>
+        # =========================
+        # 엔트로피 계산
+        # =========================
+        charset_size = 0
+
+        if any(c.islower() for c in password):
+            charset_size += 26
+
+        if any(c.isupper() for c in password):
+            charset_size += 26
+
+        if any(c.isdigit() for c in password):
+            charset_size += 10
+
+        if any(not c.isalnum() for c in password):
+            charset_size += 33
+
+        entropy = len(password) * math.log2(
+            charset_size if charset_size > 0 else 1
+        )
+
+        score = min(int(entropy), 100)
+
+        # =========================
+        # 등급 판정
+        # =========================
+        if entropy < 40:
+            level = "매우 취약"
+            color = "#ef4444"
+            icon = "🚨"
+
+        elif entropy < 70:
+            level = "보통"
+            color = "#f59e0b"
+            icon = "⚠️"
+
+        elif entropy < 100:
+            level = "안전"
+            color = "#3b82f6"
+            icon = "🔒"
+
+        else:
+            level = "철통 보안"
+            color = "#22c55e"
+            icon = "🛡️"
+
+        # =========================
+        # 원형 진행률 느낌
+        # =========================
+        st.markdown("### 🎯 보안 점수")
+
+        st.progress(score / 100)
+
+        st.markdown(
+            f"""
+            <div style="
+                background:{color};
+                padding:15px;
+                border-radius:15px;
+                text-align:center;
+                font-size:28px;
+                font-weight:bold;
+                color:white;
+                margin-top:10px;
+            ">
+                {icon} {level}
             </div>
-        """, unsafe_allow_html=True)
-        
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.markdown("")
+
+        # =========================
+        # 메트릭
+        # =========================
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric(
+            "🔢 엔트로피",
+            f"{entropy:.1f} bits"
+        )
+
+        col2.metric(
+            "📏 길이",
+            len(password)
+        )
+
+        col3.metric(
+            "🎯 보안 점수",
+            f"{score}/100"
+        )
+
+        # =========================
         # 해킹 시간 계산
+        # =========================
         seconds = (2**entropy) / (10**10)
-        time_str = f"{seconds:.2f} 초" if seconds < 60 else (f"{seconds/60:.2f} 분" if seconds < 3600 else (f"{seconds/3600:.2f} 시간" if seconds < 86400 else f"{seconds/31536000:.2f} 년"))
-        
-        col2.metric("예상 해킹 소요 시간", time_str)
-        
-        st.markdown(f'</div>', unsafe_allow_html=True)
-        
-        # 하단 조언 섹션
-        st.info("💡 보안 강화 팁: 12자리 이상 무작위 조합을 사용하면 해킹 시뮬레이션 시간이 '년' 단위로 급증합니다.")
-    else:
-        st.markdown('</div>', unsafe_allow_html=True)
+
+        if seconds < 60:
+            time_str = f"{seconds:.2f} 초"
+
+        elif seconds < 3600:
+            time_str = f"{seconds/60:.2f} 분"
+
+        elif seconds < 86400:
+            time_str = f"{seconds/3600:.2f} 시간"
+
+        elif seconds < 31536000:
+            time_str = f"{seconds/86400:.2f} 일"
+
+        else:
+            time_str = f"{seconds/31536000:.2f} 년"
+
+        st.markdown("")
+
+        st.markdown(
+            f"""
+            <div style="
+                background:#1e293b;
+                padding:20px;
+                border-radius:15px;
+                text-align:center;
+                border:2px solid {color};
+            ">
+                <h3>💻 예상 해킹 소요 시간</h3>
+                <h1 style="color:{color};">
+                    {time_str}
+                </h1>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # =========================
+        # 비밀번호 분석
+        # =========================
+        st.markdown("### 🔍 비밀번호 구성 분석")
+
+        c1, c2 = st.columns(2)
+
+        with c1:
+
+            st.write(
+                "✅ 소문자 포함"
+                if any(c.islower() for c in password)
+                else "❌ 소문자 없음"
+            )
+
+            st.write(
+                "✅ 대문자 포함"
+                if any(c.isupper() for c in password)
+                else "❌ 대문자 없음"
+            )
+
+        with c2:
+
+            st.write(
+                "✅ 숫자 포함"
+                if any(c.isdigit() for c in password)
+                else "❌ 숫자 없음"
+            )
+
+            st.write(
+                "✅ 특수문자 포함"
+                if any(not c.isalnum() for c in password)
+                else "❌ 특수문자 없음"
+            )
+
+        # =========================
+        # 실시간 보안 레이더
+        # =========================
+        st.markdown("### 📈 보안 요소 점검")
+
+        strength_items = {
+            "길이 8자 이상": len(password) >= 8,
+            "길이 12자 이상": len(password) >= 12,
+            "대문자 사용": any(c.isupper() for c in password),
+            "소문자 사용": any(c.islower() for c in password),
+            "숫자 사용": any(c.isdigit() for c in password),
+            "특수문자 사용": any(not c.isalnum() for c in password),
+        }
+
+        for item, ok in strength_items.items():
+
+            if ok:
+                st.success(item)
+
+            else:
+                st.error(item)
+
+        # =========================
+        # 해커 진행바
+        # =========================
+        st.markdown("### 🕵️ 해커의 공격 성공 확률")
+
+        attack_rate = max(0, 100 - score)
+
+        st.progress(attack_rate / 100)
+
+        if attack_rate > 70:
+            st.error(f"🚨 공격 성공 확률 : {attack_rate}%")
+
+        elif attack_rate > 40:
+            st.warning(f"⚠️ 공격 성공 확률 : {attack_rate}%")
+
+        else:
+            st.success(f"🛡️ 공격 성공 확률 : {attack_rate}%")
