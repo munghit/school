@@ -56,7 +56,7 @@ if page == "📂 연구 종합 보고서":
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #38bdf8; height: 100%;">
             <h4 style="color:#38bdf8;">⚙️ 암호학적 엔트로피</h4>
-            비밀번호 강도는 <b>비트당 정보량</b>에 비례함. 문자셋의 집합 크기를 늘리는 것보다, <b>지수적으로 작용하는 길이 증가</b>가 브루트포스 공격의 계산 복잡도를 비약적으로 상승시킴.
+            비밀번호 강도는 <b>비트당 정보량</b>에 비례 문자셋의 집합 크기를 늘리는 것보다, <b>지수적으로 작용하는 길이 증가</b>가 브루트포스 공격의 계산 복잡도를 비약적으로 상승시킴.
         </div>
         """, unsafe_allow_html=True)
         
