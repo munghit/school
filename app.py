@@ -346,7 +346,7 @@ elif page == "🛡️ 보안성 시뮬레이터":
 
         risk_level="LOW" if attack_probability<30 else "MEDIUM" if attack_probability<70 else "HIGH"
 
-         st.markdown(f"""
+        st.markdown(f"""
         <div style="
         background:linear-gradient(145deg,#020617,#111827);
         padding:35px;
