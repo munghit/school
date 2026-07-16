@@ -53,9 +53,9 @@ if page == "📂 연구 종합 보고서":
     
     with c1:
         st.markdown("""
-        <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #38bdf8; height: 100%;">
-            <h4 style="color:#38bdf8;">암호학적 엔트로피</h4>
-            비밀번호 강도는 <b>지수적 길이(Length)</b>에 의존함. 문자 조합보다 12자 이상의 충분한 길이가 공격자의 계산 복잡도를 압도함.
+          <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #38bdf8; height: 100%;">
+            <h4 style="color:#38bdf8;">암호학적 효율성</h4>
+            무분별한 길이 연장은 인지 부하만 가중함. 핵심은 <b>단순 반복이 아닌, 높은 정보 밀도를 가진 문자 집합의 12자 이상 최적화</b>에 있음.
         </div>
         """, unsafe_allow_html=True)
         
