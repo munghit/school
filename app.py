@@ -46,8 +46,7 @@ if page == "📂 연구 종합 보고서":
         }, index=['4자/단순', '6자/조합', '8자/조합', '12자/복합'])
         st.bar_chart(df)
 
-  # [결론]
-    # [결론] - 전문성 강화 버전
+# [결론] - 핵심 요약 버전
     st.subheader("🎯 3. 결론 (종합적 탐구 결과)")
     
     c1, c2, c3 = st.columns(3)
@@ -55,26 +54,27 @@ if page == "📂 연구 종합 보고서":
     with c1:
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #38bdf8; height: 100%;">
-            <h4 style="color:#38bdf8;">⚙️ 암호학적 엔트로피</h4>
-            비밀번호 강도는 <b>비트당 정보량</b>에 비례 문자셋의 집합 크기를 늘리는 것보다, <b>지수적으로 작용하는 길이 증가</b>가 브루트포스 공격의 계산 복잡도를 비약적으로 상승시킴.
+            <h4 style="color:#38bdf8;">암호학적 엔트로피</h4>
+            비밀번호 강도는 <b>지수적 길이(Length)</b>에 의존함. 문자 조합보다 12자 이상의 충분한 길이가 공격자의 계산 복잡도를 압도함.
         </div>
         """, unsafe_allow_html=True)
         
     with c2:
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #fbbf24; height: 100%;">
-            <h4 style="color:#fbbf24;">🧠 인지 부하 최적화</h4>
-            엄격한 복잡성 규칙은 <b>인지적 마찰</b>을 유발해 사용자 스스로 보안을 우회하게 함. <b>패스프레이즈 모델</b>은 기억 용량 내에서 충분한 엔트로피를 확보하는 가장 효율적인 인터페이스임.
+            <h4 style="color:#fbbf24;">인지적 효율성</h4>
+            복잡성 규칙은 <b>인지적 마찰</b>을 유발함. <b>패스프레이즈(Passphrase)</b>는 암기 부하를 줄이면서도 정보량을 극대화하는 최적의 모델임.
         </div>
         """, unsafe_allow_html=True)
         
     with c3:
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #22c55e; height: 100%;">
-            <h4 style="color:#22c55e;">🛡️ 전략적 보안 통합</h4>
-            최적의 보안은 <b>[기술적 안전성(엔트로피)]</b>과 <b>[행동적 수용성(편의성)]</b> 사이의 균형점임. 12자리 이상의 패스프레이즈는 연산 성능의 발전에도 불구하고, 해독 비용이 계정 탈취 가치를 상회하는 <b>'보안적 경제성'</b>을 확보함.
+            <h4 style="color:#22c55e;">보안적 경제성</h4>
+            최적 보안은 기술과 행동의 <b>균형점</b>임. 12자 이상의 패스프레이즈는 연산 비용을 이득보다 높게 만드는 <b>경제적 방어선</b>임.
         </div>
         """, unsafe_allow_html=True)
+  
     st.info("""
     💡 **핵심 결론**: 무작위 암기 불가능한 비밀번호는 보안 취약점을 만듭니다. 
     현실적인 해결책은 '패스프레이즈(Passphrase)'입니다. 
