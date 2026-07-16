@@ -55,68 +55,46 @@ if page == "📂 연구 종합 보고서":
                 '<li><b>제언</b>: 보안 시스템 설계 시 사용자에게 단순 복잡성을 강요하기보다, 실효성 있는 <b>"최소 길이 가이드라인"</b>을 우선시하는 정책이 필요함.</li></ul>'
                 '</div>', unsafe_allow_html=True)
 # --- 시뮬레이터 페이지 부분 ---
-elif page == "🛡️ 보안성 시뮬레이터":
-    st.title("🛡️ 실시간 보안 강도 분석기")
-    st.markdown("---")
-
-    password = st.text_input("비밀번호 입력", type="password", placeholder="분석할 비밀번호를 입력하세요")
-
-    if password:
-        # 엔트로피 및 기본 분석 로직 (기존 코드 유지)
-        charset_size = sum([26 if any(c.islower() for c in password) else 0,
-                           26 if any(c.isupper() for c in password) else 0,
-                           10 if any(c.isdigit() for c in password) else 0,
-                           33 if any(not c.isalnum() for c in password) else 0])
-        entropy = len(password) * math.log2(charset_size if charset_size > 0 else 1)
-        score = min(int(entropy), 100)
-        
-        # 등급 판정 (기존 로직)
-        if entropy < 40: level, color, icon = "매우 취약", "#ef4444", "🚨"
-        elif entropy < 70: level, color, icon = "보통", "#f59e0b", "⚠️"
-        elif entropy < 100: level, color, icon = "안전", "#3b82f6", "🔒"
-        else: level, color, icon = "철통 보안", "#22c55e", "🛡️"
-
-        # [전문성 추가 1] 상단 대시보드 레이아웃
-        st.subheader("🎯 종합 보안 등급")
-        st.progress(score / 100)
-        st.markdown(f'<div style="background:{color}; padding:15px; border-radius:10px; text-align:center; font-size:24px; color:white; font-weight:bold;">{icon} {level}</div>', unsafe_allow_html=True)
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns(3)
-        col1.metric("엔트로피 강도", f"{entropy:.1f} bits")
-        col2.metric("비밀번호 길이", f"{len(password)} 자")
-        col3.metric("최종 보안 점수", f"{score}/100")
-
-        # [전문성 추가 2] 시각적 해킹 타임라인
-        st.markdown("### ⏱️ 공격자 대응 시뮬레이션")
-        seconds = (2**entropy) / (10**10)
-        time_str = f"{seconds:.2f} 초" if seconds < 60 else (f"{seconds/60:.2f} 분" if seconds < 3600 else (f"{seconds/3600:.2f} 시간" if seconds < 86400 else (f"{seconds/86400:.2f} 일" if seconds < 31536000 else f"{seconds/31536000:.2f} 년")))
-        
-        st.markdown(f"""
-            <div style="background:#0f172a; padding:20px; border-radius:15px; border-left: 5px solid {color}; border-right: 5px solid {color}; text-align:center;">
-                <p style="margin:0; color:#94a3b8;">현대적 GPU 브루트포스 공격(10¹⁰ H/s) 방어 시</p>
-                <h2 style="margin:5px 0; color:white;">예상 해독 시간: <span style="color:{color};">{time_str}</span></h2>
-            </div>
-        """, unsafe_allow_html=True)
-
-        # [전문성 추가 3] 그리드 기반 분석 보고서
+# [전문성 추가 3] 그리드 기반 분석 보고서
         st.markdown("### 🔍 상세 구성 분석")
         c1, c2 = st.columns(2)
+        
         with c1:
-            st.markdown("#### ⚙️ 구성 요소 체크")
-            crit = {"소문자": any(c.islower() for c in password), "대문자": any(c.isupper() for c in password), 
-                    "숫자": any(c.isdigit() for c in password), "특수문자": any(not c.isalnum() for c in password)}
-            for name, ok in crit.items():
-                st.write(f"{'✅' if ok else '❌'} {name} 포함")
+            st.markdown("#### ⚙️ 문자 구성 요소")
+            # 기준을 좀 더 상세하게 명시
+            elements = {
+                "소문자 (a-z)": any(c.islower() for c in password),
+                "대문자 (A-Z)": any(c.isupper() for c in password),
+                "숫자 (0-9)": any(c.isdigit() for c in password),
+                "특수문자 (!@#$%)": any(not c.isalnum() for c in password)
+            }
+            for name, ok in elements.items():
+                st.write(f"{'✅' if ok else '❌'} {name}")
         
         with c2:
-            st.markdown("#### 🛡️ 보안 권장 기준 충족 여부")
-            rules = {"길이 8자 이상": len(password) >= 8, "길이 12자 이상(최적)": len(password) >= 12}
-            for name, ok in rules.items():
+            st.markdown("#### 🛡️ 보안 규정 준수 기준")
+            # 기준 내용을 더 자세하게 설명
+            standards = {
+                "최소 권장 길이 (8자)": len(password) >= 8,
+                "최적 보안 길이 (12자 이상)": len(password) >= 12,
+                "복합 문자셋 사용 (3종 이상)": sum([any(c.islower() for c in password), any(c.isupper() for c in password), 
+                                          any(c.isdigit() for c in password), any(not c.isalnum() for c in password)]) >= 3
+            }
+            for name, ok in standards.items():
                 st.write(f"{'✅' if ok else '❌'} {name}")
 
-        # [전문성 추가 4] 해커 위협도 레이더
+        # [전문성 추가 4] 해킹 성공 확률 강조 (폰트 대형화)
+        st.markdown("---")
         st.markdown("### 🕵️ 공격 성공 확률 (위험도)")
+        
         attack_rate = max(0, 100 - score)
+        
+        # 위험도를 대형 폰트와 컬러로 강조
+        st.markdown(f"""
+            <div style="text-align: center; padding: 20px;">
+                <h1 style="font-size: 60px; color: {color}; margin: 0;">{attack_rate:.1f}%</h1>
+                <p style="font-size: 20px; font-weight: bold; color: #94a3b8;">잠재적 해킹 침투 가능성</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
         st.progress(attack_rate / 100)
-        st.caption(f"시스템 취약 노출도: {attack_rate}%")
