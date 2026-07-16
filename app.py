@@ -56,7 +56,7 @@ if page == "📂 연구 종합 보고서":
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #38bdf8; height: 100%;">
             <h4 style="color:#38bdf8;">⚙️ 암호학적 엔트로피</h4>
-            비밀번호 강도는 <b>비트당 정보량(Entropy density)</b>에 비례함. 문자셋의 집합 크기(Charset size)를 늘리는 것보다, <b>지수적으로 작용하는 길이(Length) 증가</b>가 브루트포스 공격의 계산 복잡도를 비약적으로 상승시킴.
+            비밀번호 강도는 <b>비트당 정보량</b>에 비례함. 문자셋의 집합 크기를 늘리는 것보다, <b>지수적으로 작용하는 길이 증가</b>가 브루트포스 공격의 계산 복잡도를 비약적으로 상승시킴.
         </div>
         """, unsafe_allow_html=True)
         
@@ -64,7 +64,7 @@ if page == "📂 연구 종합 보고서":
         st.markdown("""
         <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #fbbf24; height: 100%;">
             <h4 style="color:#fbbf24;">🧠 인지 부하 최적화</h4>
-            엄격한 복잡성 규칙(강제된 문자 혼용)은 <b>인지적 마찰(Cognitive friction)</b>을 유발해 사용자 스스로 보안을 우회하게 함. <b>패스프레이즈(Passphrase) 모델</b>은 기억 용량(Working memory) 내에서 충분한 엔트로피를 확보하는 가장 효율적인 인터페이스임.
+            엄격한 복잡성 규칙은 <b>인지적 마찰</b>을 유발해 사용자 스스로 보안을 우회하게 함. <b>패스프레이즈 모델</b>은 기억 용량 내에서 충분한 엔트로피를 확보하는 가장 효율적인 인터페이스임.
         </div>
         """, unsafe_allow_html=True)
         
