@@ -46,14 +46,38 @@ if page == "📂 연구 종합 보고서":
         }, index=['4자/단순', '6자/조합', '8자/조합', '12자/복합'])
         st.bar_chart(df)
 
-   # [결론]
+  # [결론]
     st.subheader("🎯 3. 결론 (종합적 탐구 결과)")
-    st.markdown('<div class="card">'
-                '<ul><li><b>길이와 조합의 상호보완성</b>: 비밀번호 보안은 단순히 글자 수만 늘리는 것이 아니라, <b>"충분한 길이(12자리 이상)"</b>와 <b>"다양한 문자 집합(대/소문자, 숫자, 특수문자)"</b>이 결합될 때 비로소 완성됨.</li>'
-                '<li><b>엔트로피(Entropy)의 극대화</b>: 다양한 문자 조합은 경우의 수를 기하급수적으로 늘려 무차별 대입 공격을 무력화하며, 12자리 이상의 길이는 이를 현실적으로 해독 불가능한 시간대(수백 년 이상)로 고착시킴.</li>'
-                '<li><b>종합적 판단</b>: 따라서 최적의 보안 기준은 <b>[12자리 이상 + 무작위 문자 조합]</b>이며, 이는 현대 컴퓨팅 성능을 고려했을 때 해킹 비용을 이득보다 높게 만드는 가장 효율적인 방어 전략임.</li>'
-                '<li><b>제언</b>: 보안 시스템 설계 시 사용자에게 단순 복잡성을 강요하기보다, 실효성 있는 <b>"최소 길이 가이드라인"</b>을 우선시하는 정책이 필요함.</li></ul>'
-                '</div>', unsafe_allow_html=True)
+    
+    # 가독성을 위한 3단 카드 레이아웃
+    c1, c2, c3 = st.columns(3)
+    
+    with c1:
+        st.markdown("""
+        <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #38bdf8; height: 100%;">
+            <h4 style="color:#38bdf8;">🛡️ 보안 기술적 측면</h4>
+            길이와 문자셋의 결합을 통한 <b>엔트로피 극대화</b>가 해킹 저항력 향상의 핵심임을 증명함.
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with c2:
+        st.markdown("""
+        <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #fbbf24; height: 100%;">
+            <h4 style="color:#fbbf24;">👤 사용자 측면</h4>
+            무분별한 복잡성 요구는 오히려 보안 사고를 유발함. <b>12자리 이상의 적정 길이</b>가 사용성과 보안의 최적점.
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with c3:
+        st.markdown("""
+        <div style="background:#1e293b; padding:15px; border-radius:10px; border-top: 5px solid #22c55e; height: 100%;">
+            <h4 style="color:#22c55e;">📈 최종 결과</h4>
+            현대 컴퓨팅 환경에서 <b>[12자리 + 무작위 조합]</b>은 해독 불가능한 <b>'철통 보안'</b>의 표준임.
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.info("💡 **결론 제언**: 향후 보안 시스템 설계는 사용자의 기억력을 저해하는 '복잡한 문자 강제' 정책에서 벗어나, '길이 기반의 엔트로피 확보' 정책으로 전환되어야 합니다.")
 # --- 시뮬레이터 페이지 부분 ---
 elif page == "🛡️ 보안성 시뮬레이터":
     st.title("🛡️ 실시간 보안 강도 분석기")
