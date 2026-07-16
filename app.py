@@ -427,4 +427,4 @@ elif page == "🛡️ 보안성 시뮬레이터":
         </div>
         """,unsafe_allow_html=True)
         
-                st.progress(attack_probability/100)
+        st.progress(attack_probability/100)
