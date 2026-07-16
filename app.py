@@ -1,84 +1,62 @@
 import streamlit as st
 import math
-import requests
-from streamlit_lottie import st_lottie
 
-# 1. 페이지 설정
-st.set_page_config(page_title="비밀번호 보안 프로젝트", layout="wide")
+st.set_page_config(page_title="보안 연구 프로젝트", layout="wide")
 
-# 2. 디자인 CSS (메모지 카드 스타일 & 사이드바 다크테마)
+# 사이드바 디자인 CSS
 st.markdown("""
     <style>
-    /* 사이드바 스타일 */
-    [data-testid="stSidebar"] {
-        background-color: #2c3e50;
-    }
+    [data-testid="stSidebar"] { background-color: #2c3e50; }
     [data-testid="stSidebar"] * { color: white !important; }
-    
-    /* 메모지 카드 스타일 */
-    .card {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        border-left: 5px solid #3498db;
-        margin-bottom: 20px;
-    }
+    .card { background-color: #f8f9fa; padding: 20px; border-radius: 15px; border-left: 5px solid #3498db; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     </style>
 """, unsafe_allow_html=True)
 
-# Lottie 애니메이션 불러오기
-def load_lottie(url):
-    r = requests.get(url)
-    if r.status_code != 200: return None
-    return r.json()
-
-lottie_security = load_lottie("https://assets5.lottiefiles.com/packages/lf20_t3rzr5b6.json")
-
 # 3. 사이드바
 st.sidebar.title("📌 연구 탐색")
-page = st.sidebar.radio("목차", ["📂 연구 보고서", "🛡️ 시뮬레이터"])
+page = st.sidebar.radio("목차", ["📂 연구 보고서", "🛡️ 보안성 시뮬레이터"])
 
 # --- 1. 연구 보고서 페이지 ---
 if page == "📂 연구 보고서":
     st.title("📂 디지털 환경의 비밀번호 보안성 심층 분석")
     
-    col1, col2 = st.columns([1, 2])
-    with col1:
-        st_lottie(lottie_security, height=300)
-        
-    with col2:
-        st.markdown('<div class="card"><h3>🔍 연구 목적</h3>본 연구는 사용자 비밀번호의 취약점을 수학적으로 분석하고, 정량적 피드백을 제공함으로써 정보보안의 인식을 개선하고자 합니다.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="card"><h3>🛠️ 연구 과정</h3>1. 가이드라인 분석 → 2. 수학적 모델 수립 → 3. 알고리즘 구현 → 4. 인터페이스 시각화</div>', unsafe_allow_html=True)
+    st.markdown('<div class="card"><h3>🔍 연구 목적</h3>본 연구는 비밀번호 보안의 핵심인 <b>엔트로피(Entropy)</b>를 정량화하여, 무차별 대입 공격에 대한 방어력을 시각적으로 확인하고 개인의 보안 의식을 고취하는 데 목적이 있습니다.</div>', unsafe_allow_html=True)
 
-    st.subheader("📊 핵심 성과")
-    c1, c2, c3 = st.columns(3)
-    c1.metric("이론적 근거", "NIST SP 800-63B")
-    c2.metric("분석 핵심", "엔트로피(Entropy)")
-    c3.metric("구현 도구", "Streamlit & Python")
+    st.subheader("🛠️ 연구 수행 과정")
+    cols = st.columns(4)
+    steps = [("① 이론적 조사", "NIST 가이드라인 기반 보안 지표 분석"), 
+             ("② 모델 수립", "엔트로피 공식 및 공격 시나리오 설정"), 
+             ("③ 알고리즘 구현", "Python 기반 실시간 강도 산출 로직 설계"), 
+             ("④ 시각화 구현", "Streamlit을 통한 대시보드 구축")]
+    
+    for i, (title, desc) in enumerate(steps):
+        cols[i].markdown(f"**{title}**\n\n{desc}")
+
+    st.subheader("📊 수학적 분석 기반")
+    c1, c2 = st.columns(2)
+    c1.latex("E = L \\times \\log_2(N)")
+    c1.caption("엔트로피 공식: 보안 강도의 핵심 지표")
+    c2.write("**공격 시나리오:** 최신 GPU(10^10 H/s) 기반 무차별 대입 공격을 가정하여 객관적인 해킹 소요 시간을 도출함.")
 
 # --- 2. 시뮬레이터 페이지 ---
 elif page == "🛡️ 보안성 시뮬레이터":
     st.title("🛡️ 보안성 분석 시뮬레이터")
     
-    with st.container():
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        password = st.text_input("분석할 비밀번호 입력", type="password")
-        st.markdown('</div>', unsafe_allow_html=True)
+    password = st.text_input("비밀번호를 입력하여 보안성을 확인하세요.", type="password")
     
     if password:
-        # 분석 로직
-        entropy = len(password) * math.log2(40) # 단순화된 엔트로피 계산
+        # 보안 로직
+        n = 95 # 대소문자+숫자+특수문자 총 95개 기준
+        entropy = len(password) * math.log2(n)
         seconds = (2**entropy) / (10**10)
         years = seconds / (31536000)
         
-        st.markdown(f"### 📈 분석 리포트")
+        st.markdown("### 📈 실시간 분석 결과")
         m1, m2 = st.columns(2)
         m1.metric("엔트로피 강도", f"{entropy:.1f} bits")
         m2.metric("예상 해킹 시간", f"{years:.2f}년" if years > 1 else f"{seconds:.1f}초")
         
-        st.progress(min(entropy / 100, 1.0))
-        
-        if years > 100: st.success("✅ **보안 등급: 최고 (매우 안전)**")
-        elif years > 1: st.warning("⚠️ **보안 등급: 보통 (복잡도 향상 권장)**")
-        else: st.error("🚨 **보안 등급: 위험 (즉시 변경 필요)**")
+        # 상태 표시
+        if years > 100: st.success("✅ **보안 수준: 최고** (매우 안전한 비밀번호입니다)")
+        elif years > 1: st.warning("⚠️ **보안 수준: 보통** (길이를 조금 더 늘리는 것을 권장합니다)")
+        else: st.error("🚨 **보안 수준: 매우 취약** (즉시 변경이 시급합니다)")
