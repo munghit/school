@@ -340,7 +340,7 @@ elif page == "🛡️ 보안성 시뮬레이터":
             for name, ok in standards.items(): st.write(f"{'✅' if ok else '❌'} {name}")
         st.markdown("### 🕵️ 공격 성공 가능성 분석")
 
-               st.markdown("### 🕵️ 보안 위험도 평가")
+        st.markdown("### 🕵️ 보안 위험도 평가")
 
         attack_probability=max(0,100-score)
 
