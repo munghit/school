@@ -222,114 +222,125 @@ page=st.sidebar.radio(
 # 연구 보고서
 # =====================================================
 
+if page=="📂 연구 종합 보고서":
 
-if page=="📑 연구 보고서":
+    st.title("📂 디지털 보안 연구 종합 보고서")
+    st.markdown("---")
 
-
-    st.markdown("""
-    <div class="title-box">
-
-    <h1>
-    🛡️ AI 기반 디지털 인증 보안 연구
-    </h1>
-
-    <p>
-    Shannon Entropy와 공격 모델 기반
-    패스워드 안전성 평가 시스템
-    </p>
-
-    </div>
-
-    """,
-    unsafe_allow_html=True)
-
-
-
-    st.header("1. 연구 배경")
-
+    st.header("📝 1. 서론")
 
     c1,c2=st.columns(2)
 
-
     with c1:
-
         st.markdown("""
         <div class="card">
-
-        <h3>🔍 연구 목적</h3>
-
-        현대 인증 시스템에서 가장 빈번하게 발생하는
-        계정 탈취 문제는 약한 패스워드 사용에서 발생한다.
-
-        본 연구는 정보이론 기반 엔트로피 분석을 통해
-        패스워드의 공격 저항성을 정량적으로 평가한다.
-
+        <h3>🔍 탐구 동기</h3>
+        최근 발생하는 개인정보 유출 및 계정 탈취 사고의 주요 원인 중 하나는 취약한 비밀번호 사용이다.<br><br>
+        기존의 복잡성 중심 보안 정책은 사용자의 기억 부담을 증가시키지만 실제 공격 저항성을 정확히 반영하지 못한다.<br><br>
+        본 연구에서는 정보이론 기반 정량 분석을 통해 비밀번호 보안성을 평가하고 최적의 보안 조건을 탐구한다.
         </div>
-        """,
-        unsafe_allow_html=True)
-
-
+        """,unsafe_allow_html=True)
 
     with c2:
-
         st.markdown("""
         <div class="card">
-
-        <h3>⚠️ 주요 위협 모델</h3>
-
-        • Brute Force Attack<br>
-        • Dictionary Attack<br>
-        • Credential Stuffing<br>
-        • GPU Parallel Cracking
-
+        <h3>❓ 탐구 문제</h3>
+        1. 비밀번호 보안성을 결정하는 핵심 요소는 무엇인가?<br><br>
+        2. 길이와 복잡성 중 어떤 요소가 공격 저항성에 더 큰 영향을 미치는가?<br><br>
+        3. 보안성과 사용 편의성을 동시에 만족하는 방법은 무엇인가?
         </div>
-        """,
-        unsafe_allow_html=True)
+        """,unsafe_allow_html=True)
 
 
+    st.header("⚙️ 2. 본론 (연구 과정 및 분석 기준)")
 
-    st.header("2. 평가 모델")
+    st.subheader("📚 이론적 배경")
+
+    st.markdown("""
+    <div class="card">
+    <h3>Shannon Entropy 기반 보안성 평가</h3>
+    엔트로피는 비밀번호가 가지는 정보량을 의미하며 값이 높을수록 가능한 조합 수가 증가하여 공격 난이도가 높아진다.<br><br>
+    <b>공식</b><br>
+    E = L × log₂(N)<br><br>
+    L : 비밀번호 길이<br>
+    N : 사용 가능한 문자 집합 크기
+    </div>
+    """,unsafe_allow_html=True)
 
 
-    df=pd.DataFrame({
+    st.subheader("📊 보안성 평가 기준")
 
-        "평가 요소":
-        [
-            "Entropy",
-            "Length",
-            "Character Space",
-            "Pattern Risk"
+    criteria=pd.DataFrame({
+        "평가 요소":[
+            "길이(L)",
+            "문자 집합(N)",
+            "엔트로피(E)",
+            "패턴 위험도",
+            "예상 공격 시간"
         ],
-
-        "가중치":
-        [
-            40,
-            25,
-            20,
-            15
+        "분석 기준":[
+            "비밀번호 길이가 증가할수록 조합 수 증가",
+            "대문자·소문자·숫자·특수문자 사용 여부",
+            "정보량(bit)을 이용한 수학적 보안성 평가",
+            "반복 문자 및 예측 가능한 패턴 감점",
+            "GPU Brute Force 공격 기준 계산"
         ]
-
     })
 
-
-    st.dataframe(
-        df,
-        use_container_width=True
-    )
+    st.dataframe(criteria,use_container_width=True)
 
 
+    st.subheader("⚔️ 공격 시간 계산 모델")
 
-    st.info(
-    """
-    핵심 연구 결론:
+    st.markdown("""
+    <div class="card">
+    공격자가 초당 R개의 조합을 검사한다고 가정할 때 예상 해독 시간은 다음과 같이 계산한다.<br><br>
+    <b>T = 2ᴱ / R</b><br><br>
+    E : 엔트로피(bit)<br>
+    R : 초당 검사 가능한 조합 수<br><br>
+    본 연구에서는 현대 GPU 기반 공격 환경을 고려하여 R = 10¹⁰ guesses/sec 기준으로 분석한다.
+    </div>
+    """,unsafe_allow_html=True)
 
-    단순한 복잡성 증가보다
-    충분한 길이와 높은 정보량을 가진
-    Passphrase 방식이 현대 인증 환경에서
-    가장 효율적인 보안 전략이다.
-    """
-    )
 
+    st.header("🎯 3. 결론 (종합 연구 결과)")
+
+    c1,c2,c3=st.columns(3)
+
+    with c1:
+        st.markdown("""
+        <div class="card">
+        <h3>🔐 암호학적 효율성</h3>
+        보안성 향상의 핵심은 단순한 규칙 증가가 아니라 높은 엔트로피 확보이다.
+        </div>
+        """,unsafe_allow_html=True)
+
+    with c2:
+        st.markdown("""
+        <div class="card">
+        <h3>🧠 사용자 편의성</h3>
+        복잡한 문자열보다 긴 Passphrase 방식이 기억성과 보안을 동시에 만족한다.
+        </div>
+        """,unsafe_allow_html=True)
+
+    with c3:
+        st.markdown("""
+        <div class="card">
+        <h3>🛡️ 최적 보안 전략</h3>
+        12자 이상의 단어 조합형 패스프레이즈가 현실적인 보안 해결책이다.
+        </div>
+        """,unsafe_allow_html=True)
+
+
+    st.success("""
+💡 최종 결론
+
+비밀번호 보안성은 단순히 특수문자를 추가하는 것이 아니라
+충분한 길이와 높은 정보량을 확보하는 것이 핵심이다.
+
+따라서 현대 인증 환경에서는
+긴 패스프레이즈 기반 방식이 가장 효율적인 보안 전략이다.
+""")
 
 
 # =====================================================
