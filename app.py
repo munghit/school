@@ -459,3 +459,376 @@ unsafe_allow_html=True)
 높은 정보량을 가지는 패스프레이즈 기반 방식이
 보안성과 사용성을 모두 만족하는 방법이다.
 """)
+
+elif page=="🛡️ 보안성 시뮬레이터":
+
+    st.title("🛡️ 비밀번호 보안성 평가 시스템")
+
+    st.markdown("---")
+
+
+    password=st.text_input(
+        "🔑 분석할 비밀번호 입력",
+        type="password",
+        placeholder="비밀번호를 입력하세요"
+    )
+
+
+    if password:
+
+
+        # 문자 집합 계산
+
+        charset_size=sum([
+            26 if any(c.islower() for c in password) else 0,
+            26 if any(c.isupper() for c in password) else 0,
+            10 if any(c.isdigit() for c in password) else 0,
+            33 if any(not c.isalnum() for c in password) else 0
+        ])
+
+
+
+        # 엔트로피 계산
+
+        entropy=len(password)*math.log2(
+            charset_size if charset_size>0 else 1
+        )
+
+
+        score=min(int(entropy),100)
+
+
+
+        # 보안 등급
+
+        if entropy<40:
+
+            level="매우 위험"
+            color="#ef4444"
+            icon="🚨"
+
+
+        elif entropy<70:
+
+            level="보통"
+            color="#f59e0b"
+            icon="⚠️"
+
+
+        elif entropy<100:
+
+            level="안전"
+            color="#3b82f6"
+            icon="🔒"
+
+
+        else:
+
+            level="매우 안전"
+            color="#22c55e"
+            icon="🛡️"
+
+
+
+        st.subheader("🎯 종합 보안 평가")
+
+
+        st.progress(score/100)
+
+
+        st.markdown(f"""
+<div style="
+background:#111827;
+padding:30px;
+border-radius:20px;
+border:1px solid {color};
+text-align:center;
+">
+
+<div style="
+font-size:45px;
+">
+{icon}
+</div>
+
+
+<h2 style="
+color:{color};
+">
+{level}
+</h2>
+
+
+<p style="
+color:#cbd5e1;
+font-size:18px;
+">
+엔트로피 기반 비밀번호 보안 등급
+</p>
+
+
+</div>
+""",
+unsafe_allow_html=True)
+
+
+
+        col1,col2,col3=st.columns(3)
+
+
+
+        col1.metric(
+            "정보량(엔트로피)",
+            f"{entropy:.2f} bits"
+        )
+
+
+        col2.metric(
+            "비밀번호 길이",
+            f"{len(password)} 자"
+        )
+
+
+        col3.metric(
+            "보안 점수",
+            f"{score}/100"
+        )
+
+
+
+        st.markdown("---")
+
+
+        st.subheader("⏱️ 무차별 대입 공격 시뮬레이션")
+
+
+
+        # 초당 100억 회 공격 가정
+
+        seconds=(2**entropy)/(10**10)
+
+
+
+        if seconds<60:
+
+            time_result=f"{seconds:.2f}초"
+
+
+        elif seconds<3600:
+
+            time_result=f"{seconds/60:.2f}분"
+
+
+        elif seconds<86400:
+
+            time_result=f"{seconds/3600:.2f}시간"
+
+
+        elif seconds<31536000:
+
+            time_result=f"{seconds/86400:.2f}일"
+
+
+        else:
+
+            time_result=f"{seconds/31536000:.2f}년"
+
+
+
+        st.markdown(f"""
+<div class="card">
+
+<h3>⚔️ 예상 해독 시간</h3>
+
+
+<h1 style="
+text-align:center;
+color:{color};
+">
+
+{time_result}
+
+</h1>
+
+
+<p style="
+text-align:center;
+color:#94a3b8;
+">
+
+GPU 기반 무차별 대입 공격 환경 가정
+
+</p>
+
+
+</div>
+""",
+unsafe_allow_html=True)
+
+
+
+
+        st.subheader("🔍 상세 보안 분석")
+
+
+
+        c1,c2=st.columns(2)
+
+
+
+        with c1:
+
+
+            st.markdown("""
+<div class="card">
+
+<h3>⚙️ 문자 구성 분석</h3>
+
+</div>
+""",
+unsafe_allow_html=True)
+
+
+
+            elements={
+
+                "소문자 포함":any(c.islower() for c in password),
+
+                "대문자 포함":any(c.isupper() for c in password),
+
+                "숫자 포함":any(c.isdigit() for c in password),
+
+                "특수문자 포함":any(not c.isalnum() for c in password)
+
+            }
+
+
+
+            for name,value in elements.items():
+
+                st.write(
+                    f"{'✅' if value else '❌'} {name}"
+                )
+
+
+
+
+        with c2:
+
+
+            st.markdown("""
+<div class="card">
+
+<h3>🛡️ 보안 기준 평가</h3>
+
+</div>
+""",
+unsafe_allow_html=True)
+
+
+
+            standards={
+
+                "8자 이상 사용":
+                len(password)>=8,
+
+
+                "12자 이상 권장":
+                len(password)>=12,
+
+
+                "3종 이상 문자 조합":
+                sum([
+                    any(c.islower() for c in password),
+                    any(c.isupper() for c in password),
+                    any(c.isdigit() for c in password),
+                    any(not c.isalnum() for c in password)
+                ])>=3
+
+            }
+
+
+
+            for name,value in standards.items():
+
+                st.write(
+                    f"{'✅' if value else '❌'} {name}"
+                )
+
+
+
+
+        st.markdown("---")
+
+
+        st.subheader("🕵️ 예상 침투 위험도 분석")
+
+
+
+        risk=max(0,100-score)
+
+
+
+        if risk<30:
+
+            risk_text="낮음"
+
+
+        elif risk<70:
+
+            risk_text="주의"
+
+
+        else:
+
+            risk_text="높음"
+
+
+
+        st.markdown(f"""
+<div class="card">
+
+<h3 style="
+text-align:center;
+">
+비밀번호 침투 위험도
+</h3>
+
+
+<h1 style="
+text-align:center;
+color:{color};
+font-size:60px;
+">
+
+{risk:.2f}%
+
+</h1>
+
+
+<h3 style="
+text-align:center;
+">
+
+위험 수준 : {risk_text}
+
+</h3>
+
+
+<p style="
+text-align:center;
+color:#94a3b8;
+">
+
+엔트로피와 공격 모델 기반 추정값
+
+</p>
+
+
+</div>
+""",
+unsafe_allow_html=True)
+
+
+
+        st.progress(risk/100)
