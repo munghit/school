@@ -200,13 +200,13 @@ elif page == "🛡️ 보안성 시뮬레이터":
             standards = {"최소 권장 길이 (8자)": len(password) >= 8, "최적 보안 길이 (12자 이상)": len(password) >= 12, "복합 문자셋 (3종 이상)": sum([any(c.islower() for c in password), any(c.isupper() for c in password), any(c.isdigit() for c in password), any(not c.isalnum() for c in password)]) >= 3}
             for name, ok in standards.items(): st.write(f"{'✅' if ok else '❌'} {name}")
 
-      # 위험도 강조 (소수점 2번째 자리까지)
+            # 위험도 강조 (소수점 2번째 자리까지)
         st.markdown("---")
         st.markdown("### 🕵️ 공격 성공 확률 (위험도)")
-        
+
         attack_rate = max(0, 100 - score)
-        
-      st.markdown(f"""
+
+        st.markdown(f"""
 <div style="
 background:linear-gradient(135deg,{color},#111827);
 padding:25px;
@@ -221,5 +221,5 @@ box-shadow:0 10px 30px rgba(0,0,0,0.5);
 {icon}<br>{level}
 </div>
 """,unsafe_allow_html=True)
-        
-        st.progress(attack_rate / 100) 
+
+        st.progress(attack_rate / 100)
