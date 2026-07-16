@@ -7,72 +7,211 @@ st.set_page_config(page_title="디지털 보안 연구 보고서", layout="wide"
 # CSS 스타일링
 st.markdown("""
 <style>
+
 .stApp{
-background:linear-gradient(135deg,#020617,#0f172a,#111827);
-color:#e5e7eb;
-}
-h1{
-color:#38bdf8;
-font-weight:800;
-letter-spacing:-1px;
-}
-h2,h3{
+background:
+radial-gradient(circle at top,#1e3a8a 0%,transparent 35%),
+linear-gradient(135deg,#020617,#0b1120);
 color:#e2e8f0;
 }
-.card{
-background:linear-gradient(145deg,#111827,#1e293b);
-padding:25px;
-border-radius:18px;
-border:1px solid #334155;
-margin-bottom:20px;
-color:#f8fafc;
-box-shadow:0 8px 25px rgba(0,0,0,0.35);
-}
-.step-box{
-background:#172554;
-padding:16px;
-border-radius:12px;
-margin-bottom:12px;
-border-left:5px solid #38bdf8;
-color:#e0f2fe;
-font-weight:600;
-}
-[data-testid="metric-container"]{
-background:linear-gradient(145deg,#111827,#1e293b);
-border-radius:15px;
-padding:18px;
-border:1px solid #334155;
-}
-[data-testid="metric-container"] [data-testid="stMetricValue"]{
+
+
+/* 전체 제목 */
+
+h1{
+font-size:42px;
+font-weight:900;
 color:#38bdf8;
-font-size:28px;
+text-shadow:0 0 20px rgba(56,189,248,0.5);
+}
+
+h2,h3{
+color:#e0f2fe;
 font-weight:800;
 }
-.stTextInput input{
-background:#020617;
-color:white;
-border:1px solid #38bdf8;
-border-radius:10px;
+
+
+/* 연구 카드 */
+
+.card{
+
+background:
+rgba(15,23,42,0.85);
+
+backdrop-filter:blur(10px);
+
+padding:28px;
+
+border-radius:20px;
+
+border:1px solid rgba(56,189,248,0.25);
+
+box-shadow:
+0 15px 35px rgba(0,0,0,0.45);
+
+color:#f8fafc;
+
 }
-.stProgress>div>div{
-background:linear-gradient(90deg,#2563eb,#22c55e);
+
+
+/* 탐구 과정 */
+
+.step-box{
+
+background:
+linear-gradient(
+90deg,
+#172554,
+#0f172a
+);
+
+padding:18px;
+
+border-radius:14px;
+
+margin-bottom:12px;
+
+border-left:
+5px solid #38bdf8;
+
+font-weight:700;
+
+color:#bae6fd;
+
 }
-[data-testid="stDataFrame"]{
-border-radius:15px;
-overflow:hidden;
+
+
+/* Metric 카드 */
+
+[data-testid="metric-container"]{
+
+background:
+linear-gradient(
+145deg,
+#111827,
+#1e293b
+);
+
+border-radius:18px;
+
+padding:22px;
+
+border:
+
+1px solid rgba(56,189,248,0.3);
+
+box-shadow:
+0 10px 25px rgba(0,0,0,0.4);
+
 }
-.stAlert{
-border-radius:15px;
+
+
+[data-testid="stMetricLabel"]{
+
+color:#94a3b8;
+
+font-size:15px;
+
 }
-section[data-testid="stSidebar"]{
-background:linear-gradient(180deg,#020617,#111827);
-}
-section[data-testid="stSidebar"] h1{
+
+
+[data-testid="stMetricValue"]{
+
 color:#38bdf8;
+
+font-size:32px;
+
+font-weight:900;
+
 }
+
+
+/* 입력창 */
+
+.stTextInput input{
+
+background:#020617;
+
+color:#f8fafc;
+
+border:
+
+1px solid #38bdf8;
+
+border-radius:14px;
+
+height:50px;
+
+font-size:18px;
+
+}
+
+
+/* 버튼 및 진행바 */
+
+.stProgress > div > div{
+
+background:
+
+linear-gradient(
+90deg,
+#2563eb,
+#06b6d4,
+#22c55e
+);
+
+}
+
+
+/* 알림창 */
+
+.stAlert{
+
+background:#111827;
+
+border-radius:15px;
+
+border:1px solid #334155;
+
+}
+
+
+/* 사이드바 */
+
+section[data-testid="stSidebar"]{
+
+background:
+
+linear-gradient(
+180deg,
+#020617,
+#111827
+);
+
+border-right:
+
+1px solid rgba(56,189,248,0.2);
+
+}
+
+
+/* 데이터프레임 */
+
+[data-testid="stDataFrame"]{
+
+border-radius:18px;
+
+border:
+
+1px solid #334155;
+
+overflow:hidden;
+
+}
+
+
 </style>
 """,unsafe_allow_html=True)
-
 # 1. 사이드바
 st.sidebar.title("📌 메뉴")
 page = st.sidebar.radio("목차", ["📂 연구 종합 보고서", "🛡️ 보안성 시뮬레이터"])
