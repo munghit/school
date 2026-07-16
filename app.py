@@ -54,12 +54,59 @@ if page == "📂 연구 종합 보고서":
                 '<li><b>종합적 판단</b>: 따라서 최적의 보안 기준은 <b>[12자리 이상 + 무작위 문자 조합]</b>이며, 이는 현대 컴퓨팅 성능을 고려했을 때 해킹 비용을 이득보다 높게 만드는 가장 효율적인 방어 전략임.</li>'
                 '<li><b>제언</b>: 보안 시스템 설계 시 사용자에게 단순 복잡성을 강요하기보다, 실효성 있는 <b>"최소 길이 가이드라인"</b>을 우선시하는 정책이 필요함.</li></ul>'
                 '</div>', unsafe_allow_html=True)
-# --- 시뮬레이터 ---
+# --- 시뮬레이터 페이지 부분 ---
 elif page == "🛡️ 보안성 시뮬레이터":
-    st.title("🛡️ 보안성 분석 시뮬레이터")
-    pw = st.text_input("비밀번호 입력", type="password")
-    if pw:
-        entropy = len(pw) * math.log2(95)
-        st.metric("분석 강도", f"{entropy:.1f} bits")
-        st.progress(min(entropy / 100, 1.0))
-        st.write("※ 기준: 80 bits 이상 권장")
+    st.title("🛡️ 실시간 보안 강도 분석기")
+    st.markdown("---")
+    
+    # 1. 입력 섹션
+    with st.container():
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        password = st.text_input("분석할 비밀번호를 입력하세요 (암호화 처리됨)", type="password")
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    if password:
+        # 분석 로직 (엔트로피 계산)
+        # 문자 종류 계산 (대문자, 소문자, 숫자, 특수문자 고려)
+        charset_size = 0
+        if any(c.islower() for c in password): charset_size += 26
+        if any(c.isupper() for c in password): charset_size += 26
+        if any(c.isdigit() for c in password): charset_size += 10
+        if any(not c.isalnum() for c in password): charset_size += 33
+        
+        entropy = len(password) * math.log2(charset_size if charset_size > 0 else 1)
+        
+        # 해킹 시간 추정 (10^10 H/s 가정)
+        seconds = (2**entropy) / (10**10)
+        
+        # 2. 결과 시각화 (시각적 재미 요소)
+        col1, col2 = st.columns([1, 1])
+        
+        with col1:
+            st.markdown("### 📊 보안 지표 상세")
+            st.metric("엔트로피 강도", f"{entropy:.1f} bits")
+            # 보안 등급에 따른 컬러 프로그레스바
+            progress_val = min(entropy / 120, 1.0)
+            st.write("보안 수준 게이지")
+            st.progress(progress_val)
+            
+            if entropy < 50: st.error("🚨 등급: 매우 취약 (수초 이내 해독)")
+            elif entropy < 80: st.warning("⚠️ 등급: 보통 (복잡도 향상 필요)")
+            else: st.success("✅ 등급: 매우 안전 (해독 불가 수준)")
+            
+        with col2:
+            st.markdown("### ⏱️ 공격 시뮬레이션 예상 시간")
+            # 가독성을 위한 시간 변환
+            if seconds < 60: time_str = f"{seconds:.2f} 초"
+            elif seconds < 3600: time_str = f"{seconds/60:.2f} 분"
+            elif seconds < 86400: time_str = f"{seconds/3600:.2f} 시간"
+            else: time_str = f"{seconds/31536000:.2f} 년"
+            
+            st.metric("예상 해킹 소요 시간", time_str)
+            st.info("※ 가정: 현대적인 GPU 클러스터 기반 무차별 대입 공격 (10^10 H/s)")
+
+        # 3. 추가 조언 카드
+        st.markdown("---")
+        st.markdown('<div class="card"><h4>💡 보안 엔지니어의 조언</h4>'
+                    '입력하신 비밀번호의 엔트로피가 80 bits를 넘지 못한다면, <b>길이를 12자 이상으로 늘리거나 특수문자를 추가</b>하여 '
+                    '경우의 수를 2배 이상 확보하는 것을 강력히 권장합니다.</div>', unsafe_allow_html=True)
