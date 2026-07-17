@@ -2,289 +2,439 @@ import streamlit as st
 import math
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="보안 연구 상세 보고서",layout="wide")
+st.set_page_config(page_title="디지털 보안 연구 분석 시스템",layout="wide")
 
 st.markdown("""
 <style>
 .stApp{
-background:
-radial-gradient(circle at top left,#172554,transparent 35%),
-radial-gradient(circle at bottom right,#312e81,transparent 35%),
-#020617;
-color:#e2e8f0;
-}
-p,li{
-color:#dbeafe;
-font-size:17px;
-line-height:1.7;
+background:#f8fafc;
+color:#1e293b;
 }
 h1{
-color:#7dd3fc!important;
+color:#1d4ed8!important;
 font-size:42px!important;
 font-weight:900;
 }
 h2{
-color:#a5b4fc!important;
+color:#1e40af!important;
 font-weight:800;
 }
 h3{
-color:#67e8f9!important;
+color:#334155!important;
+}
+p,li{
+color:#334155;
+font-size:17px;
+line-height:1.7;
 }
 .content-box{
-background:
-linear-gradient(
-145deg,
-rgba(30,41,59,.95),
-rgba(15,23,42,.95)
-);
-padding:30px;
-border-radius:20px;
-border:1px solid #334155;
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-margin-bottom:20px;
-transition:.3s;
+background:white;
+padding:28px;
+border-radius:15px;
+border:1px solid #e2e8f0;
+box-shadow:0 5px 15px rgba(15,23,42,.08);
+margin-bottom:18px;
 }
-.content-box:hover{
-transform:translateY(-3px);
-border:1px solid #38bdf8;
-box-shadow:0 15px 30px rgba(0,0,0,.35);
+.metric-card{
+background:white;
+padding:22px;
+border-radius:15px;
+border:1px solid #dbeafe;
+text-align:center;
+box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.metric-number{
+font-size:38px;
+font-weight:900;
+color:#2563eb;
+}
+.highlight{
+color:#2563eb;
+font-weight:800;
 }
 section[data-testid="stSidebar"]{
-background:linear-gradient(180deg,#020617,#111827);
+background:#ffffff;
+border-right:1px solid #e2e8f0;
 }
 section[data-testid="stSidebar"] label{
-color:#7dd3fc!important;
+color:#1d4ed8!important;
 font-weight:700;
 }
 .stTextInput input{
-background:#0f172a!important;
-color:white!important;
-border-radius:15px!important;
-border:1px solid #38bdf8!important;
-font-size:18px;
+background:white!important;
+color:#1e293b!important;
+border-radius:10px!important;
+border:1px solid #94a3b8!important;
 }
 .stProgress>div>div>div{
-background:linear-gradient(90deg,#38bdf8,#818cf8);
-}
-li::marker{
-color:#38bdf8;
-}
-.score-card{
-border:1px solid #38bdf8;
-}
-.metric-card{
-background:
-linear-gradient(
-145deg,
-rgba(15,23,42,.95),
-rgba(30,64,175,.35)
-);
-padding:25px;
-border-radius:20px;
-border:1px solid #334155;
-text-align:center;
-}
-.metric-number{
-font-size:35px;
-font-weight:900;
-color:#38bdf8;
+background:#2563eb;
 }
 </style>
 """,unsafe_allow_html=True)
 
 menu=st.sidebar.radio(
-"발표 섹션",
+"연구 분석 메뉴",
 [
-"서론: 연구 배경",
-"본론 1: 이론적 배경",
-"본론 2: 실태 및 문제점",
-"본론 3: 해결 방안 및 구현",
-"시뮬레이션: 보안 실증",
-"결론: 연구 결과"
-])
+"📌 연구 개요",
+"📚 이론적 배경",
+"📈 보안 취약성 분석",
+"⚙️ 시스템 구현",
+"🧪 실험 및 결과",
+"🎯 결론 및 의의"
+]
+)
 
-if menu=="서론: 연구 배경":
+if menu=="📌 연구 개요":
 
-    st.title("🛡️ 디지털 보안 연구")
+    st.title("🛡️ 디지털 환경에서의 비밀번호 보안성 분석 연구")
 
     st.markdown("""
 <div class="content-box">
+
 <h2>연구 배경</h2>
+
 <p>
-디지털 서비스 증가와 함께 개인정보 보호의 중요성이 커지고 있습니다.
-그러나 많은 사용자는 편리함을 위해 단순한 비밀번호를 사용하고 있으며,
-이는 개인정보 유출 위험으로 이어지고 있습니다.
+디지털 서비스의 확대와 함께 개인정보 보호의 중요성이 증가하고 있습니다.
+그러나 사용자는 편리성을 이유로 단순하거나 반복적인 비밀번호를 사용하는 경우가 많으며,
+이는 개인정보 유출 위험을 증가시키는 주요 원인이 됩니다.
 </p>
+
 </div>
 """,unsafe_allow_html=True)
+
 
     c1,c2,c3=st.columns(3)
 
     with c1:
         st.markdown("""
 <div class="metric-card">
+
 <h3>🔑 Password</h3>
+
 <div class="metric-number">
 1st
 </div>
+
 <p>
 첫 번째 보안 방어선
 </p>
+
 </div>
 """,unsafe_allow_html=True)
+
 
     with c2:
         st.markdown("""
 <div class="metric-card">
+
 <h3>⚠️ Risk</h3>
+
 <div class="metric-number">
 ↑
 </div>
+
 <p>
 디지털 위협 증가
 </p>
+
 </div>
 """,unsafe_allow_html=True)
+
 
     with c3:
         st.markdown("""
 <div class="metric-card">
+
 <h3>🛡 Defense</h3>
+
 <div class="metric-number">
 AI
 </div>
+
 <p>
-데이터 기반 보안 필요
+데이터 기반 분석 필요
 </p>
+
 </div>
 """,unsafe_allow_html=True)
+
 
     st.markdown("""
 <div class="content-box">
 
-<h3>연구 목표</h3>
+<h2>연구 목적</h2>
 
 <ul>
-<li>비밀번호가 보안의 첫 번째 방어선임을 이론적으로 분석</li>
-<li>사용자의 보안 인식과 실제 행동 사이의 차이를 확인</li>
-<li>데이터 기반 시뮬레이션을 통해 능동적인 보안 습관 형성 유도</li>
+<li>비밀번호가 디지털 보안의 핵심 방어 요소임을 분석</li>
+<li>사용자의 보안 인식과 실제 사용 행태의 차이를 확인</li>
+<li>데이터 기반 분석 시스템을 통해 보안 수준을 정량적으로 평가</li>
 </ul>
 
 </div>
 """,unsafe_allow_html=True)
 
 
-elif menu=="본론 1: 이론적 배경":
+    st.markdown("""
+<div class="content-box">
 
-    st.title("📖 이론적 배경 상세")
+<h2>연구 진행 과정</h2>
+
+<p class="highlight">
+문제 정의 → 이론 분석 → 알고리즘 설계 → 시스템 구현 → 결과 분석
+</p>
+
+</div>
+""",unsafe_allow_html=True)
+
+elif menu=="📚 이론적 배경":
+
+    st.title("📚 이론적 배경")
 
     c1,c2=st.columns(2)
 
     with c1:
         st.markdown("""
 <div class="content-box">
-<h3>1. 정보보호와 비밀번호</h3>
+
+<h2>1. 정보보호와 비밀번호</h2>
+
 <ul>
-<li><b>인증의 기본:</b> 비밀번호는 인가자와 침입자를 구분하는 핵심 인증 수단입니다.</li>
-<li><b>관리 가이드:</b> 영문, 숫자, 특수문자 조합은 공격 가능성을 낮추는 기본 전략입니다.</li>
+<li><b>인증 과정:</b> 비밀번호는 사용자를 확인하는 가장 기본적인 인증 수단입니다.</li>
+<li><b>보안 원칙:</b> 영문, 숫자, 특수문자의 조합은 공격 가능성을 감소시키는 핵심 요소입니다.</li>
+<li><b>관리 전략:</b> 비밀번호 관리자는 안전한 비밀번호 생성과 저장을 지원합니다.</li>
 </ul>
+
 </div>
 """,unsafe_allow_html=True)
+
 
     with c2:
         st.markdown("""
 <div class="content-box">
-<h3>2. 공격 원리와 복잡도</h3>
+
+<h2>2. 공격 원리와 복잡도</h2>
+
 <ul>
-<li><b>무차별 대입 공격:</b> 가능한 모든 조합을 탐색하는 방식으로 비밀번호 길이에 따라 시간이 증가합니다.</li>
-<li><b>보안 수학:</b> 문자 집합 크기와 길이 증가는 조합 공간을 지수적으로 증가시킵니다.</li>
+<li><b>무차별 대입 공격:</b> 가능한 모든 조합을 반복적으로 시도하는 공격 방식입니다.</li>
+<li><b>조합 공간:</b> 문자 집합 크기와 비밀번호 길이에 따라 경우의 수가 증가합니다.</li>
+<li><b>수학적 관계:</b> 가능한 경우의 수는 N<sup>L</sup> 형태로 증가합니다.</li>
 </ul>
+
 </div>
 """,unsafe_allow_html=True)
 
-
-elif menu=="본론 2: 실태 및 문제점":
-
-    st.title("⚠️ 현황 및 문제점 분석")
 
     st.markdown("""
 <div class="content-box">
-<h3>사용자 보안 실태: 편리함의 역설</h3>
-<p>
-많은 사용자는 보안보다 기억하기 쉬운 비밀번호를 선호합니다.
-이는 동일한 비밀번호 반복 사용과 개인정보 노출 위험 증가로 이어집니다.
-</p>
+
+<h2>비밀번호 보안의 핵심 변수</h2>
+
 </div>
 """,unsafe_allow_html=True)
+
+
+    a,b,c=st.columns(3)
+
+    with a:
+        st.markdown("""
+<div class="metric-card">
+<h3>Length</h3>
+<div class="metric-number">L</div>
+<p>비밀번호 길이</p>
+</div>
+""",unsafe_allow_html=True)
+
+    with b:
+        st.markdown("""
+<div class="metric-card">
+<h3>Character</h3>
+<div class="metric-number">N</div>
+<p>사용 문자 종류</p>
+</div>
+""",unsafe_allow_html=True)
+
+    with c:
+        st.markdown("""
+<div class="metric-card">
+<h3>Entropy</h3>
+<div class="metric-number">↑</div>
+<p>정보량 증가</p>
+</div>
+""",unsafe_allow_html=True)
+
+
+
+elif menu=="📈 보안 취약성 분석":
+
+    st.title("📈 보안 취약성 분석")
+
+
+    st.markdown("""
+<div class="content-box">
+
+<h2>사용자 보안 실태: 편리함과 보안의 충돌</h2>
+
+<p>
+많은 사용자는 기억하기 쉬운 비밀번호를 선택하며,
+이는 비밀번호 재사용과 보안 취약성 증가로 이어집니다.
+따라서 사용자가 자신의 보안 수준을 직접 확인할 수 있는
+정량적 분석 시스템이 필요합니다.
+</p>
+
+</div>
+""",unsafe_allow_html=True)
+
 
     c1,c2=st.columns(2)
 
+
     with c1:
+
         st.markdown("""
 <div class="content-box">
-<h3>기술적 취약점</h3>
+
+<h2>기술적 취약점</h2>
+
 <ul>
-<li><b>사전 공격:</b> 자주 사용하는 단어나 패턴을 기반으로 공격합니다.</li>
-<li><b>비밀번호 재사용:</b> 하나의 정보 유출이 여러 계정 위험으로 연결됩니다.</li>
+<li><b>사전 공격:</b> 자주 사용되는 단어나 패턴을 기반으로 공격</li>
+<li><b>무차별 대입:</b> 모든 조합을 반복적으로 탐색</li>
+<li><b>재사용 문제:</b> 하나의 유출이 여러 계정 위험으로 확산</li>
 </ul>
+
 </div>
 """,unsafe_allow_html=True)
+
+
+    with c2:
+
+        st.markdown("""
+<div class="content-box">
+
+<h2>인지적 취약점</h2>
+
+<ul>
+<li><b>판단 어려움:</b> 사용자가 안전한 수준을 직접 평가하기 어려움</li>
+<li><b>보안 피로:</b> 복잡한 규칙에 대한 사용자 부담 증가</li>
+<li><b>인식과 행동 차이:</b> 중요성은 알지만 실천 부족</li>
+</ul>
+
+</div>
+""",unsafe_allow_html=True)
+
+elif menu=="⚙️ 시스템 구현":
+
+    st.title("⚙️ 시스템 구현")
+
+    st.markdown("""
+<div class="content-box">
+
+<h2>구현 목표</h2>
+
+<p>
+본 연구에서는 사용자가 입력한 비밀번호를 기반으로
+보안 수준을 정량적으로 분석하고,
+결과를 시각적으로 제공하는 체험형 보안 분석 시스템을 구현하였습니다.
+</p>
+
+</div>
+""",unsafe_allow_html=True)
+
+
+    c1,c2,c3=st.columns(3)
+
+
+    with c1:
+        st.markdown("""
+<div class="metric-card">
+
+<h3>Streamlit</h3>
+
+<div class="metric-number">
+UI
+</div>
+
+<p>
+인터랙티브 웹 구현
+</p>
+
+</div>
+""",unsafe_allow_html=True)
+
 
     with c2:
         st.markdown("""
-<div class="content-box">
-<h3>인지적 취약점</h3>
-<ul>
-<li><b>보안 기준 부족:</b> 사용자는 안전한 비밀번호 수준을 직접 판단하기 어렵습니다.</li>
-<li><b>행동과 인식 차이:</b> 중요성은 알지만 실천으로 이어지지 않는 문제가 존재합니다.</li>
-</ul>
+<div class="metric-card">
+
+<h3>Python</h3>
+
+<div class="metric-number">
+AI
+</div>
+
+<p>
+분석 알고리즘 구현
+</p>
+
 </div>
 """,unsafe_allow_html=True)
 
 
-elif menu=="본론 3: 해결 방안 및 구현":
+    with c3:
+        st.markdown("""
+<div class="metric-card">
 
-    st.title("💡 개선 방안 및 기술 스택")
+<h3>Plotly</h3>
+
+<div class="metric-number">
+📊
+</div>
+
+<p>
+데이터 시각화
+</p>
+
+</div>
+""",unsafe_allow_html=True)
+
 
     st.markdown("""
 <div class="content-box">
-<h3>제도적·기술적 대응</h3>
-<ul>
-<li><b>다중 인증(MFA/2FA):</b> 비밀번호 외 추가 인증을 통해 보안을 강화합니다.</li>
-<li><b>비밀번호 관리자:</b> 복잡한 비밀번호 생성과 관리를 자동화합니다.</li>
-</ul>
-</div>
-""",unsafe_allow_html=True)
 
-    st.markdown("""
-<div class="content-box">
-<h3>구현 환경 및 혁신</h3>
+<h2>분석 알고리즘</h2>
+
 <ul>
-<li><b>Streamlit:</b> 사용자의 입력 데이터를 기반으로 실시간 보안 분석 환경 구현</li>
-<li><b>GitHub:</b> 코드 관리 및 프로젝트 공유 환경 구축</li>
-<li><b>체험형 보안:</b> 단순 교육에서 벗어나 직접 경험하는 보안 분석 시스템 구축</li>
+<li><b>입력 데이터:</b> 사용자가 입력한 비밀번호</li>
+<li><b>평가 요소:</b> 길이, 대소문자, 숫자, 특수문자 구성</li>
+<li><b>출력 결과:</b> 보안 점수, 보안 요소 분석, 예상 공격 시간</li>
 </ul>
+
 </div>
 """,unsafe_allow_html=True)
 
 
-elif menu=="시뮬레이션: 보안 실증":
 
-    st.title("🛡️ 실시간 보안성 시뮬레이터")
+elif menu=="🧪 실험 및 결과":
+
+    st.title("🧪 실험 및 결과")
 
     pw=st.text_input(
-        "🔑 테스트할 비밀번호를 입력하세요",
+        "🔑 분석할 비밀번호 입력",
         type="password"
     )
+
 
     if pw:
 
         length_score=min(len(pw)*10,100)
 
         upper_score=100 if any(c.isupper() for c in pw) else 0
+
         lower_score=100 if any(c.islower() for c in pw) else 0
+
         digit_score=100 if any(c.isdigit() for c in pw) else 0
+
         special_score=100 if any(not c.isalnum() for c in pw) else 0
+
 
         score=int(
             length_score*0.35+
@@ -296,29 +446,36 @@ elif menu=="시뮬레이션: 보안 실증":
 
         score=min(score,100)
 
-        status,color=(
-            ("안전","#22c55e")
-            if score>=70
-            else ("주의","#f59e0b")
-            if score>=40
-            else ("위험","#ef4444")
-        )
+
+        if score>=70:
+            status="안전"
+            color="#16a34a"
+
+        elif score>=40:
+            status="주의"
+            color="#ca8a04"
+
+        else:
+            status="위험"
+            color="#dc2626"
+
 
         c1,c2=st.columns([1,2])
+
 
         with c1:
 
             st.markdown(f"""
-<div class="content-box score-card">
+<div class="content-box" style="text-align:center">
 
-<h3>🛡️ 보안 점수</h3>
+<h2>보안 점수</h2>
 
-<h1 style="color:{color};font-size:75px;">
+<h1 style="color:{color};font-size:75px">
 {score}
 </h1>
 
 <p>
-평가 :
+현재 등급:
 <b style="color:{color}">
 {status}
 </b>
@@ -327,30 +484,32 @@ elif menu=="시뮬레이션: 보안 실증":
 </div>
 """,unsafe_allow_html=True)
 
+
         with c2:
 
             st.markdown("""
 <div class="content-box">
 
-<h3>🔍 분석 상세</h3>
+<h2>분석 결과</h2>
 
 <ul>
-<li><b>길이:</b> 긴 비밀번호일수록 가능한 조합 수 증가</li>
-<li><b>문자 조합:</b> 다양한 문자 사용은 공격 난이도 증가</li>
-<li><b>결과:</b> 입력된 비밀번호의 보안 수준 분석</li>
+<li>비밀번호 길이 기반 안정성 평가</li>
+<li>문자 조합 다양성 분석</li>
+<li>공격 가능성 및 위험 수준 계산</li>
 </ul>
 
 </div>
 """,unsafe_allow_html=True)
+
 
         st.progress(score/100)
 
 
         st.markdown("---")
 
-        st.subheader("📡 보안 요소 분석 레이더")
+        st.subheader("📊 보안 요소 분석")
 
-        radar_categories=[
+        categories=[
             "길이",
             "대문자",
             "소문자",
@@ -358,7 +517,7 @@ elif menu=="시뮬레이션: 보안 실증":
             "특수문자"
         ]
 
-        radar_values=[
+        values=[
             length_score,
             upper_score,
             lower_score,
@@ -366,46 +525,36 @@ elif menu=="시뮬레이션: 보안 실증":
             special_score
         ]
 
-        radar_categories.append(radar_categories[0])
-        radar_values.append(radar_values[0])
+        categories.append(categories[0])
+        values.append(values[0])
+
 
         fig=go.Figure(
             go.Scatterpolar(
-                r=radar_values,
-                theta=radar_categories,
+                r=values,
+                theta=categories,
                 fill="toself",
                 line=dict(
-                    color="#38bdf8",
+                    color="#2563eb",
                     width=3
                 )
             )
         )
 
+
         fig.update_layout(
             polar=dict(
-                bgcolor="#0f172a",
+                bgcolor="#ffffff",
                 radialaxis=dict(
                     visible=True,
-                    range=[0,100],
-                    color="#cbd5e1"
-                ),
-                angularaxis=dict(
-                    color="#cbd5e1"
+                    range=[0,100]
                 )
             ),
-            height=450,
             showlegend=False,
-            margin=dict(
-                l=40,
-                r=40,
-                t=30,
-                b=30
-            ),
-            paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(
-                color="#e2e8f0"
-            )
+            height=420,
+            paper_bgcolor="rgba(0,0,0,0)"
         )
+
 
         st.plotly_chart(
             fig,
@@ -416,7 +565,6 @@ elif menu=="시뮬레이션: 보안 실증":
         st.markdown("---")
 
         st.subheader("⏱️ 예상 무차별 대입 공격 시간")
-
 
         charset=0
 
@@ -457,7 +605,7 @@ elif menu=="시뮬레이션: 보안 실증":
         st.markdown(f"""
 <div class="content-box">
 
-<h3>🔓 공격 시뮬레이션 결과</h3>
+<h2>공격 시뮬레이션 결과</h2>
 
 <p>
 가능한 비밀번호 조합 수:
@@ -465,22 +613,22 @@ elif menu=="시뮬레이션: 보안 실증":
 </p>
 
 <p>
-기준:
-초당 10억 번의 대입 공격
+가정:
+초당 10억 번의 대입 공격 수행
 </p>
 
-<h2 style="color:#38bdf8;">
+<h1 style="color:#2563eb">
 예상 공격 시간 : {attack_time}
-</h2>
+</h1>
 
 </div>
 """,unsafe_allow_html=True)
 
 
 
-elif menu=="결론: 연구 결과":
+elif menu=="🎯 결론 및 의의":
 
-    st.title("📌 연구 결과 및 의의")
+    st.title("🎯 연구 결과 및 의의")
 
 
     c1,c2=st.columns(2)
@@ -491,16 +639,17 @@ elif menu=="결론: 연구 결과":
         st.markdown("""
 <div class="content-box">
 
-<h3>Before ❌</h3>
+<h2>기존 방식</h2>
 
 <ul>
-<li>단순한 비밀번호 사용</li>
+<li>비밀번호 규칙 암기 중심</li>
 <li>보안 수준 판단 어려움</li>
-<li>추상적인 보안 교육</li>
+<li>사용자가 위험성을 체감하기 어려움</li>
 </ul>
 
 </div>
 """,unsafe_allow_html=True)
+
 
 
     with c2:
@@ -508,12 +657,12 @@ elif menu=="결론: 연구 결과":
         st.markdown("""
 <div class="content-box">
 
-<h3>After ✅</h3>
+<h2>제안 시스템</h2>
 
 <ul>
-<li>데이터 기반 보안 분석</li>
-<li>실시간 위험 수준 확인</li>
-<li>체험형 보안 학습 가능</li>
+<li>데이터 기반 보안 수준 분석</li>
+<li>실시간 피드백 제공</li>
+<li>사용자가 직접 보안 상태 확인 가능</li>
 </ul>
 
 </div>
@@ -524,18 +673,33 @@ elif menu=="결론: 연구 결과":
     st.markdown("""
 <div class="content-box">
 
-<h2>🛡️ 연구 의의</h2>
+<h2>연구 성과</h2>
 
-<p>
-본 연구는 비밀번호 보안을 단순한 규칙 암기가 아닌,
-데이터 기반 분석과 실시간 피드백을 통해
-사용자가 직접 이해하고 개선할 수 있는
-체험형 보안 시스템으로 확장하였습니다.
-</p>
+<ul>
+<li>비밀번호 보안성을 정량적으로 평가하는 알고리즘 구현</li>
+<li>보안 요소를 그래프 형태로 시각화</li>
+<li>예상 공격 시간을 계산하여 위험성을 직관적으로 제공</li>
+<li>체험형 디지털 보안 교육 시스템 구현</li>
+</ul>
 
-<h2 style="text-align:center;color:#38bdf8;">
-"보안은 기술이 아니라 올바른 판단을 돕는 데이터입니다."
+</div>
+""",unsafe_allow_html=True)
+
+
+
+    st.markdown("""
+<div class="content-box">
+
+<h2 style="text-align:center;color:#2563eb">
+"보안은 단순한 규칙이 아니라,
+데이터를 통해 이해하고 개선하는 과정이다."
 </h2>
+
+<p style="text-align:center">
+본 연구는 사용자가 자신의 보안 수준을 직접 확인하고
+개선 방향을 이해할 수 있도록 하는
+데이터 기반 보안 분석 시스템 구축을 목표로 하였습니다.
+</p>
 
 </div>
 """,unsafe_allow_html=True)
