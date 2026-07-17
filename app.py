@@ -10,82 +10,81 @@ st.set_page_config(
 st.markdown("""
 <style>
 .stApp{
-    background:#f8fafc;
-    color:#1e293b;
+    background:#f5f7f6;
+    color:#263238;
 }
 h1{
-    color:#1d4ed8!important;
-    font-size:42px!important;
-    font-weight:900;
-}
-h2{
-    color:#1e40af!important;
+    color:#17324d!important;
+    font-size:40px!important;
     font-weight:800;
 }
+h2{
+    color:#234e70!important;
+    font-weight:750;
+}
 h3{
-    color:#334155!important;
+    color:#37474f!important;
 }
 p,li{
-    color:#334155;
-    font-size:17px;
+    color:#455a64;
+    font-size:16px;
     line-height:1.7;
 }
 .content-box{
     background:#ffffff;
-    padding:25px;
-    border-radius:16px;
-    border:1px solid #dbeafe;
-    box-shadow:0 5px 15px rgba(15,23,42,0.08);
-    margin-bottom:15px;
+    padding:22px;
+    border-radius:14px;
+    border:1px solid #d9e2e3;
+    box-shadow:0 3px 10px rgba(0,0,0,0.05);
+    margin-bottom:12px;
 }
 .metric-card{
     background:#ffffff;
-    padding:20px;
-    border-radius:16px;
-    border:1px solid #bfdbfe;
+    padding:18px;
+    border-radius:14px;
+    border:1px solid #d9e2e3;
     text-align:center;
-    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    box-shadow:0 3px 8px rgba(0,0,0,0.04);
 }
 .metric-number{
-    font-size:40px;
-    font-weight:900;
-    color:#2563eb;
+    font-size:36px;
+    font-weight:800;
+    color:#1565c0;
 }
 .report-card{
     background:#ffffff;
-    padding:20px;
-    border-radius:14px;
-    border-left:6px solid #2563eb;
-    box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    padding:18px;
+    border-radius:12px;
+    border-left:5px solid #1976a8;
 }
 .safe{
-    color:#16a34a;
-    font-weight:900;
+    color:#2e7d32;
+    font-weight:800;
 }
 .warning{
-    color:#ca8a04;
-    font-weight:900;
+    color:#ef6c00;
+    font-weight:800;
 }
 .danger{
-    color:#dc2626;
-    font-weight:900;
+    color:#c62828;
+    font-weight:800;
 }
 section[data-testid="stSidebar"]{
-    background:white;
-    border-right:1px solid #e2e8f0;
+    background:#ffffff;
+    border-right:1px solid #d9e2e3;
 }
 section[data-testid="stSidebar"] label{
-    color:#1d4ed8!important;
+    color:#234e70!important;
     font-weight:700;
 }
 .stTextInput input{
-    background:white!important;
-    color:#111827!important;
-    border:1px solid #94a3b8!important;
-    border-radius:10px!important;
+    background:#ffffff!important;
+    color:#263238!important;
+    border:1px solid #b0bec5!important;
+    border-radius:8px!important;
 }
 .stProgress>div>div>div{
-    background:#2563eb;
+    background:#1976a8;
 }
 </style>
 """,unsafe_allow_html=True)
@@ -114,9 +113,9 @@ if menu=="📌 연구 개요":
 <h2>연구 배경</h2>
 
 <p>
-디지털 서비스의 확대와 함께 개인정보 보호의 중요성이 증가하고 있습니다.
-그러나 사용자는 편리성을 이유로 단순하거나 반복적인 비밀번호를 사용하는 경우가 많으며,
-이는 개인정보 유출 위험을 증가시키는 주요 원인이 됩니다.
+디지털 서비스의 확산으로 개인정보 보호의 중요성이 증가하고 있습니다.
+하지만 많은 사용자는 기억하기 쉬운 비밀번호를 사용하거나
+동일한 비밀번호를 반복 사용하며 보안 위협에 노출되고 있습니다.
 </p>
 
 </div>
@@ -131,7 +130,7 @@ if menu=="📌 연구 개요":
 <div class="metric-card">
 <h3>🔑 Password</h3>
 <div class="metric-number">1st</div>
-<p>첫 번째 보안 방어선</p>
+<p>디지털 보안의 첫 단계</p>
 </div>
 """,unsafe_allow_html=True)
 
@@ -141,7 +140,7 @@ if menu=="📌 연구 개요":
 <div class="metric-card">
 <h3>⚠️ Risk</h3>
 <div class="metric-number">↑</div>
-<p>디지털 위협 증가</p>
+<p>사이버 위협 증가</p>
 </div>
 """,unsafe_allow_html=True)
 
@@ -149,9 +148,9 @@ if menu=="📌 연구 개요":
     with c3:
         st.markdown("""
 <div class="metric-card">
-<h3>🛡 Defense</h3>
+<h3>🛡 Analysis</h3>
 <div class="metric-number">AI</div>
-<p>데이터 기반 분석 필요</p>
+<p>데이터 기반 평가</p>
 </div>
 """,unsafe_allow_html=True)
 
@@ -162,9 +161,9 @@ if menu=="📌 연구 개요":
 <h2>연구 목적</h2>
 
 <ul>
-<li>비밀번호가 디지털 보안의 핵심 방어 요소임을 분석</li>
-<li>사용자의 보안 인식과 실제 사용 행태의 차이를 확인</li>
-<li>데이터 기반 분석 시스템을 통해 보안 수준을 정량적으로 평가</li>
+<li>비밀번호 보안성을 정량적으로 평가</li>
+<li>사용자가 자신의 보안 수준을 직접 확인</li>
+<li>데이터 기반 분석을 통한 보안 의식 향상</li>
 </ul>
 
 </div>
@@ -177,7 +176,7 @@ if menu=="📌 연구 개요":
 <h2>연구 진행 과정</h2>
 
 <p>
-문제 정의 → 이론 분석 → 알고리즘 설계 → 시스템 구현 → 결과 분석
+문제 정의 → 보안 이론 분석 → 평가 기준 설계 → 시스템 구현 → 결과 분석
 </p>
 
 </div>
@@ -196,9 +195,9 @@ elif menu=="📚 이론적 배경":
 <h2>1. 정보보호와 비밀번호</h2>
 
 <ul>
-<li><b>인증 과정:</b> 비밀번호는 사용자를 확인하는 가장 기본적인 인증 수단입니다.</li>
-<li><b>보안 원칙:</b> 영문, 숫자, 특수문자 조합은 공격 가능성을 감소시키는 핵심 요소입니다.</li>
-<li><b>관리 전략:</b> 비밀번호 관리자는 안전한 비밀번호 생성과 저장을 지원합니다.</li>
+<li><b>인증:</b> 비밀번호는 사용자의 신원을 확인하는 기본 보안 수단입니다.</li>
+<li><b>복잡도:</b> 문자 종류와 길이가 증가할수록 공격 가능성이 감소합니다.</li>
+<li><b>관리:</b> 안전한 저장과 관리 방식이 중요합니다.</li>
 </ul>
 
 </div>
@@ -209,12 +208,12 @@ elif menu=="📚 이론적 배경":
         st.markdown("""
 <div class="content-box">
 
-<h2>2. 공격 원리와 복잡도</h2>
+<h2>2. 공격 원리와 보안성</h2>
 
 <ul>
-<li><b>무차별 대입 공격:</b> 가능한 모든 조합을 반복적으로 탐색하는 공격 방식입니다.</li>
-<li><b>조합 공간:</b> 문자 집합 크기와 길이에 따라 경우의 수가 증가합니다.</li>
-<li><b>수학적 관계:</b> 가능한 경우의 수는 N<sup>L</sup> 형태로 증가합니다.</li>
+<li><b>Brute Force:</b> 가능한 모든 조합을 탐색하는 공격 방식입니다.</li>
+<li><b>Dictionary Attack:</b> 자주 사용되는 단어와 패턴을 이용합니다.</li>
+<li><b>조합 공간:</b> 문자 집합(N)과 길이(L)에 따라 N<sup>L</sup> 형태로 증가합니다.</li>
 </ul>
 
 </div>
@@ -224,10 +223,11 @@ elif menu=="📚 이론적 배경":
     st.markdown("""
 <div class="content-box">
 
-<h2>비밀번호 보안 핵심 변수</h2>
+<h2>비밀번호 보안 평가 요소</h2>
 
 </div>
 """,unsafe_allow_html=True)
+
 
 
     a,b,c=st.columns(3)
@@ -249,6 +249,7 @@ L
 """,unsafe_allow_html=True)
 
 
+
     with b:
         st.markdown("""
 <div class="metric-card">
@@ -259,10 +260,11 @@ L
 N
 </div>
 
-<p>사용 문자 종류</p>
+<p>문자 종류</p>
 
 </div>
 """,unsafe_allow_html=True)
+
 
 
     with c:
@@ -272,10 +274,10 @@ N
 <h3>Entropy</h3>
 
 <div class="metric-number">
-↑
+H
 </div>
 
-<p>정보량 증가</p>
+<p>정보량</p>
 
 </div>
 """,unsafe_allow_html=True)
@@ -290,13 +292,12 @@ elif menu=="📈 보안 취약성 분석":
     st.markdown("""
 <div class="content-box">
 
-<h2>사용자 보안 실태: 편리함과 보안의 충돌</h2>
+<h2>사용자 보안 실태</h2>
 
 <p>
-많은 사용자는 기억하기 쉬운 비밀번호를 선택하며,
-이는 비밀번호 재사용과 보안 취약성 증가로 이어집니다.
-따라서 사용자가 자신의 보안 수준을 직접 확인할 수 있는
-정량적 분석 시스템이 필요합니다.
+디지털 서비스 이용 증가에도 불구하고 많은 사용자는
+편의성을 우선하여 단순한 비밀번호를 선택합니다.
+이는 비밀번호 재사용과 예측 가능성 증가로 이어집니다.
 </p>
 
 </div>
@@ -307,6 +308,7 @@ elif menu=="📈 보안 취약성 분석":
     c1,c2=st.columns(2)
 
 
+
     with c1:
 
         st.markdown("""
@@ -315,9 +317,22 @@ elif menu=="📈 보안 취약성 분석":
 <h2>기술적 취약점</h2>
 
 <ul>
-<li><b>사전 공격:</b> 자주 사용되는 단어나 패턴을 기반으로 공격</li>
-<li><b>무차별 대입:</b> 모든 조합을 반복적으로 탐색</li>
-<li><b>재사용 문제:</b> 하나의 유출이 여러 계정 위험으로 확산</li>
+
+<li>
+<b>사전 공격</b><br>
+자주 사용되는 단어나 패턴을 기반으로 공격
+</li>
+
+<li>
+<b>무차별 대입 공격</b><br>
+모든 가능한 조합을 반복 탐색
+</li>
+
+<li>
+<b>비밀번호 재사용</b><br>
+한 계정 유출이 다른 계정 위험으로 확대
+</li>
+
 </ul>
 
 </div>
@@ -330,12 +345,25 @@ elif menu=="📈 보안 취약성 분석":
         st.markdown("""
 <div class="content-box">
 
-<h2>인지적 취약점</h2>
+<h2>사용자 측 취약점</h2>
 
 <ul>
-<li><b>판단 어려움:</b> 사용자가 안전한 수준을 직접 평가하기 어려움</li>
-<li><b>보안 피로:</b> 복잡한 규칙에 대한 사용자 부담 증가</li>
-<li><b>인식과 행동 차이:</b> 중요성은 알지만 실천 부족</li>
+
+<li>
+<b>판단 어려움</b><br>
+자신의 비밀번호 안전성을 객관적으로 확인하기 어려움
+</li>
+
+<li>
+<b>보안 피로</b><br>
+복잡한 규칙 적용에 대한 부담 증가
+</li>
+
+<li>
+<b>인식과 행동 차이</b><br>
+중요성 인식에 비해 실천 부족
+</li>
+
 </ul>
 
 </div>
@@ -345,16 +373,15 @@ elif menu=="⚙️ 시스템 구현":
 
     st.title("⚙️ 시스템 구현")
 
-
     st.markdown("""
 <div class="content-box">
 
 <h2>구현 목표</h2>
 
 <p>
-본 연구에서는 사용자가 입력한 비밀번호를 기반으로
-보안 수준을 정량적으로 분석하고,
-결과를 시각적으로 제공하는 체험형 보안 분석 시스템을 구현하였습니다.
+사용자가 입력한 비밀번호를 기반으로
+보안 요소를 분석하고, 정량적인 보안 점수와
+시각화 결과를 제공하는 체험형 분석 시스템을 구현하였습니다.
 </p>
 
 </div>
@@ -371,9 +398,11 @@ elif menu=="⚙️ 시스템 구현":
 
 <h3>Streamlit</h3>
 
-<div class="metric-number">UI</div>
+<div class="metric-number">
+UI
+</div>
 
-<p>웹 인터페이스 구현</p>
+<p>웹 인터페이스 구축</p>
 
 </div>
 """,unsafe_allow_html=True)
@@ -386,9 +415,11 @@ elif menu=="⚙️ 시스템 구현":
 
 <h3>Python</h3>
 
-<div class="metric-number">⚙️</div>
+<div class="metric-number">
+⚙️
+</div>
 
-<p>분석 알고리즘 구현</p>
+<p>보안 분석 알고리즘</p>
 
 </div>
 """,unsafe_allow_html=True)
@@ -401,7 +432,9 @@ elif menu=="⚙️ 시스템 구현":
 
 <h3>Plotly</h3>
 
-<div class="metric-number">📊</div>
+<div class="metric-number">
+📊
+</div>
 
 <p>데이터 시각화</p>
 
@@ -413,13 +446,25 @@ elif menu=="⚙️ 시스템 구현":
     st.markdown("""
 <div class="content-box">
 
-<h2>분석 알고리즘 구조</h2>
+<h2>시스템 구성</h2>
 
 <ul>
-<li><b>입력:</b> 사용자가 입력한 비밀번호</li>
-<li><b>분석:</b> 길이, 문자 구성, 엔트로피 계산</li>
-<li><b>평가:</b> 보안 점수와 위험 수준 산출</li>
-<li><b>출력:</b> 그래프 및 개선 방향 제공</li>
+
+<li>
+<b>입력 단계</b><br>
+사용자가 비밀번호 입력
+</li>
+
+<li>
+<b>분석 단계</b><br>
+길이, 문자 종류, 엔트로피 분석
+</li>
+
+<li>
+<b>출력 단계</b><br>
+보안 점수와 위험도 시각화
+</li>
+
 </ul>
 
 </div>
@@ -435,11 +480,12 @@ elif menu=="🧪 실험 및 결과":
     st.markdown("""
 <div class="content-box">
 
-<h2>🔐 AI 기반 비밀번호 보안 분석</h2>
+<h2>🔐 비밀번호 보안 분석 시스템</h2>
 
 <p>
-입력된 비밀번호를 기반으로 길이, 문자 다양성,
-엔트로피, 공격 가능성을 분석하여 보안 수준을 평가합니다.
+입력한 비밀번호를 기반으로 길이,
+문자 구성, 엔트로피, 공격 가능성을 분석하여
+보안 수준을 평가합니다.
 </p>
 
 </div>
@@ -450,14 +496,16 @@ elif menu=="🧪 실험 및 결과":
     pw=st.text_input(
         "🔑 분석할 비밀번호 입력",
         type="password",
-        placeholder="비밀번호를 입력하세요"
+        placeholder="비밀번호 입력"
     )
+
 
 
     if pw:
 
 
         length_score=min(len(pw)*8,100)
+
 
         has_upper=any(c.isupper() for c in pw)
 
@@ -466,6 +514,7 @@ elif menu=="🧪 실험 및 결과":
         has_digit=any(c.isdigit() for c in pw)
 
         has_special=any(not c.isalnum() for c in pw)
+
 
 
         upper_score=100 if has_upper else 0
@@ -495,37 +544,36 @@ elif menu=="🧪 실험 및 결과":
 
             status="안전"
 
-            color="#16a34a"
+            color="#2e7d32"
 
 
         elif score>=40:
 
             status="주의"
 
-            color="#ca8a04"
+            color="#ef6c00"
 
 
         else:
 
             status="위험"
 
-            color="#dc2626"
+            color="#c62828"
 
 
 
-
-        c1,c2=st.columns([1,2])
-
+        left,right=st.columns([1,2])
 
 
-        with c1:
+
+        with left:
 
             st.markdown(f"""
 <div class="content-box" style="text-align:center">
 
 <h3>Security Score</h3>
 
-<h1 style="font-size:80px;color:{color}">
+<h1 style="font-size:75px;color:{color}">
 {score}
 </h1>
 
@@ -538,7 +586,7 @@ elif menu=="🧪 실험 및 결과":
 
 
 
-        with c2:
+        with right:
 
             missing=[]
 
@@ -557,35 +605,40 @@ elif menu=="🧪 실험 및 결과":
 
 
 
-            if len(missing)==0:
+            if missing:
 
-                recommend="현재 모든 보안 요소가 포함되어 있습니다."
+                result=f"부족 요소: {', '.join(missing)}"
 
             else:
 
-                recommend=f"{', '.join(missing)} 요소 추가 필요"
+                result="모든 보안 요소 충족"
 
 
 
             st.markdown(f"""
 <div class="content-box">
 
-<h2>🔍 Security Report</h2>
+<h2>🔍 분석 결과</h2>
 
 <ul>
 
 <li>
-<b>비밀번호 길이:</b> {len(pw)}자리
+<b>비밀번호 길이:</b>
+{len(pw)}자리
 </li>
 
 <li>
 <b>문자 구성:</b>
-{"균형적 구성" if len(missing)==0 else "일부 요소 부족"}
+{result}
 </li>
 
 <li>
-<b>개선 방향:</b>
-{recommend}
+<b>평가 결과:</b>
+현재 비밀번호는
+<b style="color:{color}">
+{status}
+</b>
+수준입니다.
 </li>
 
 </ul>
@@ -599,7 +652,7 @@ elif menu=="🧪 실험 및 결과":
 
         st.markdown("---")
 
-        st.subheader("📊 Security Factor Analysis")
+        st.subheader("📊 보안 요소 분석")
 
 
         categories=[
@@ -620,6 +673,7 @@ elif menu=="🧪 실험 및 결과":
         ]
 
 
+
         fig=go.Figure()
 
 
@@ -628,14 +682,14 @@ elif menu=="🧪 실험 및 결과":
                 r=values,
                 theta=categories,
                 fill="toself",
-                name="Security Level",
                 line=dict(
-                    color="#2563eb",
-                    width=4
+                    color="#1976a8",
+                    width=3
                 ),
-                fillcolor="rgba(37,99,235,0.25)"
+                fillcolor="rgba(25,118,168,0.18)"
             )
         )
+
 
 
         fig.update_layout(
@@ -644,27 +698,26 @@ elif menu=="🧪 실험 및 결과":
                 radialaxis=dict(
                     visible=True,
                     range=[0,100],
-                    color="#111827",
+                    color="#37474f",
                     tickfont=dict(
-                        size=13,
-                        color="#111827"
+                        size=12,
+                        color="#37474f"
                     )
                 ),
                 angularaxis=dict(
-                    color="#111827",
+                    color="#37474f",
                     tickfont=dict(
-                        size=15,
-                        color="#111827"
+                        size=14,
+                        color="#37474f"
                     )
                 )
             ),
             font=dict(
-                color="#111827"
+                color="#263238"
             ),
             showlegend=False,
-            height=500,
-            paper_bgcolor="#ffffff",
-            plot_bgcolor="#ffffff"
+            height=480,
+            paper_bgcolor="#ffffff"
         )
 
 
@@ -678,7 +731,7 @@ elif menu=="🧪 실험 및 결과":
         st.markdown("---")
 
 
-        st.subheader("🔐 Password Entropy Analysis")
+        st.subheader("🔐 엔트로피 분석")
 
 
         charset=0
@@ -698,13 +751,7 @@ elif menu=="🧪 실험 및 결과":
 
 
 
-        if charset>0:
-
-            entropy=len(pw)*math.log2(charset)
-
-        else:
-
-            entropy=0
+        entropy=len(pw)*math.log2(charset) if charset>0 else 0
 
 
 
@@ -712,28 +759,28 @@ elif menu=="🧪 실험 및 결과":
 
             entropy_status="낮음"
 
-            entropy_color="#dc2626"
+            entropy_color="#c62828"
 
 
         elif entropy<70:
 
             entropy_status="보통"
 
-            entropy_color="#ca8a04"
+            entropy_color="#ef6c00"
 
 
         else:
 
             entropy_status="높음"
 
-            entropy_color="#16a34a"
+            entropy_color="#2e7d32"
 
 
 
         st.markdown(f"""
 <div class="content-box">
 
-<h2>정보 엔트로피</h2>
+<h2>Password Entropy</h2>
 
 <h1 style="color:{entropy_color}">
 {entropy:.2f} bits
@@ -747,8 +794,8 @@ elif menu=="🧪 실험 및 결과":
 </p>
 
 <p>
-엔트로피는 비밀번호가 가지는 예측 불가능성을 수치화한 값으로,
-값이 높을수록 공격자가 추측하기 어렵습니다.
+엔트로피는 비밀번호가 가지는 예측 불가능성을
+수치화한 값으로, 값이 높을수록 공격자가 추측하기 어렵습니다.
 </p>
 
 </div>
@@ -759,10 +806,11 @@ elif menu=="🧪 실험 및 결과":
         st.markdown("---")
 
 
-        st.subheader("⚔️ Attack Risk Analysis")
+        st.subheader("⚔️ 공격 유형별 위험도 분석")
 
 
-        attack_col1,attack_col2,attack_col3=st.columns(3)
+
+        attack1,attack2,attack3=st.columns(3)
 
 
 
@@ -790,7 +838,7 @@ elif menu=="🧪 실험 및 결과":
 
 
 
-        if pw.lower()==pw or pw.isdigit():
+        if pw.isdigit() or pw.lower()==pw:
 
             pattern="🔴 높음"
 
@@ -800,7 +848,8 @@ elif menu=="🧪 실험 및 결과":
 
 
 
-        with attack_col1:
+
+        with attack1:
 
             st.markdown(f"""
 <div class="metric-card">
@@ -812,7 +861,7 @@ elif menu=="🧪 실험 및 결과":
 </div>
 
 <p>
-사전 기반 공격 위험
+사전 공격 위험
 </p>
 
 </div>
@@ -820,7 +869,7 @@ elif menu=="🧪 실험 및 결과":
 
 
 
-        with attack_col2:
+        with attack2:
 
             st.markdown(f"""
 <div class="metric-card">
@@ -840,7 +889,7 @@ elif menu=="🧪 실험 및 결과":
 
 
 
-        with attack_col3:
+        with attack3:
 
             st.markdown(f"""
 <div class="metric-card">
@@ -852,7 +901,7 @@ elif menu=="🧪 실험 및 결과":
 </div>
 
 <p>
-규칙 기반 공격 위험
+패턴 공격 위험
 </p>
 
 </div>
@@ -863,7 +912,7 @@ elif menu=="🧪 실험 및 결과":
         st.markdown("---")
 
 
-        st.subheader("⏱️ Brute Force Simulation")
+        st.subheader("⏱️ 무차별 대입 공격 시뮬레이션")
 
 
         combinations=charset**len(pw)
@@ -904,171 +953,26 @@ elif menu=="🧪 실험 및 결과":
 
 <h2>공격 시뮬레이션 결과</h2>
 
-<p>
-가능한 조합 수:
+<ul>
+
+<li>
+가능한 비밀번호 조합:
 <b>{combinations:,}</b>
-</p>
+</li>
 
-<p>
-가정:
+<li>
+가정 조건:
 초당 10억 회 대입 공격
-</p>
+</li>
 
-<h1 style="color:#2563eb">
+</ul>
+
+<h1 style="color:#1976a8">
 예상 공격 시간 : {attack_time}
 </h1>
 
 </div>
 """,unsafe_allow_html=True)
-
-        st.markdown("---")
-
-        st.subheader("🆚 Security Improvement Simulation")
-
-
-        st.markdown("""
-<div class="content-box">
-
-<h2>현재 비밀번호와 개선된 비밀번호 비교</h2>
-
-<p>
-현재 입력한 비밀번호의 취약점을 분석하고,
-개선 방향을 적용했을 때 보안성이 어떻게 변화하는지 비교합니다.
-</p>
-
-</div>
-""",unsafe_allow_html=True)
-
-
-
-        improved_pw=pw
-
-
-        if not has_upper:
-            improved_pw+="A"
-
-        if not has_lower:
-            improved_pw+="a"
-
-        if not has_digit:
-            improved_pw+="1"
-
-        if not has_special:
-            improved_pw+="!"
-
-        while len(improved_pw)<12:
-            improved_pw+="X"
-
-
-
-        improved_charset=0
-
-
-        if any(c.islower() for c in improved_pw):
-            improved_charset+=26
-
-        if any(c.isupper() for c in improved_pw):
-            improved_charset+=26
-
-        if any(c.isdigit() for c in improved_pw):
-            improved_charset+=10
-
-        if any(not c.isalnum() for c in improved_pw):
-            improved_charset+=32
-
-
-
-        improved_score=int(
-            min(len(improved_pw)*8,100)*0.35+
-            (100 if any(c.isupper() for c in improved_pw) else 0)*0.15+
-            (100 if any(c.islower() for c in improved_pw) else 0)*0.15+
-            (100 if any(c.isdigit() for c in improved_pw) else 0)*0.15+
-            (100 if any(not c.isalnum() for c in improved_pw) else 0)*0.20
-        )
-
-
-        improved_score=min(improved_score,100)
-
-
-
-        compare1,compare2=st.columns(2)
-
-
-
-        with compare1:
-
-            st.markdown(f"""
-<div class="metric-card">
-
-<h3>현재 비밀번호</h3>
-
-<div class="metric-number">
-{score}
-</div>
-
-<p>
-보안 점수
-</p>
-
-<p>
-길이: {len(pw)}자리
-</p>
-
-</div>
-""",unsafe_allow_html=True)
-
-
-
-        with compare2:
-
-            st.markdown(f"""
-<div class="metric-card">
-
-<h3>개선 시뮬레이션</h3>
-
-<div class="metric-number">
-{improved_score}
-</div>
-
-<p>
-예상 보안 점수
-</p>
-
-<p>
-길이: {len(improved_pw)}자리
-</p>
-
-</div>
-""",unsafe_allow_html=True)
-
-
-
-        st.markdown("""
-<div class="content-box">
-
-<h2>📌 연구 결과 해석</h2>
-
-<ul>
-
-<li>
-비밀번호 길이와 문자 다양성이 증가할수록
-가능한 조합 공간이 증가합니다.
-</li>
-
-<li>
-엔트로피 증가를 통해 공격자의 예측 가능성이 감소합니다.
-</li>
-
-<li>
-사용자가 자신의 취약 요소를 확인하고 개선 방향을 선택할 수 있습니다.
-</li>
-
-</ul>
-
-</div>
-""",unsafe_allow_html=True)
-
-
 
 elif menu=="🎯 결론 및 의의":
 
@@ -1086,9 +990,19 @@ elif menu=="🎯 결론 및 의의":
 <h2>기존 보안 방식</h2>
 
 <ul>
-<li>비밀번호 규칙 암기 중심</li>
-<li>사용자가 위험성을 직접 판단하기 어려움</li>
-<li>보안 수준을 체감하기 어려움</li>
+
+<li>
+비밀번호 규칙 암기 중심
+</li>
+
+<li>
+사용자가 보안 수준을 직접 판단하기 어려움
+</li>
+
+<li>
+위험성을 체감하기 어려움
+</li>
+
 </ul>
 
 </div>
@@ -1104,10 +1018,23 @@ elif menu=="🎯 결론 및 의의":
 <h2>제안 시스템</h2>
 
 <ul>
-<li>데이터 기반 보안 수준 분석</li>
-<li>엔트로피 기반 정량 평가</li>
-<li>공격 시뮬레이션 제공</li>
-<li>개선 방향 자동 제시</li>
+
+<li>
+비밀번호 보안성 정량 평가
+</li>
+
+<li>
+엔트로피 기반 분석
+</li>
+
+<li>
+공격 위험도 시각화
+</li>
+
+<li>
+실시간 보안 피드백 제공
+</li>
+
 </ul>
 
 </div>
@@ -1122,13 +1049,21 @@ elif menu=="🎯 결론 및 의의":
 
 <ul>
 
-<li>비밀번호 보안성을 수치화하는 분석 알고리즘 구현</li>
+<li>
+비밀번호 보안 요소를 기반으로 평가 알고리즘 구현
+</li>
 
-<li>레이더 차트와 위험도 분석을 통한 시각화</li>
+<li>
+레이더 차트를 활용한 보안 수준 시각화
+</li>
 
-<li>엔트로피 기반 보안성 평가 적용</li>
+<li>
+엔트로피와 공격 시뮬레이션을 통한 위험성 표현
+</li>
 
-<li>체험형 디지털 보안 교육 시스템 구축</li>
+<li>
+사용자가 직접 체험할 수 있는 디지털 보안 분석 시스템 구축
+</li>
 
 </ul>
 
@@ -1140,16 +1075,18 @@ elif menu=="🎯 결론 및 의의":
     st.markdown("""
 <div class="content-box">
 
-<h2 style="text-align:center;color:#2563eb">
+<h2 style="text-align:center;color:#234e70">
 "보안은 단순한 규칙이 아니라,
 데이터를 통해 이해하고 개선하는 과정이다."
 </h2>
 
+
 <p style="text-align:center">
 
-본 연구는 사용자가 자신의 비밀번호 보안 수준을 직접 확인하고,
-데이터 기반 분석을 통해 안전한 디지털 환경을 구축할 수 있도록
-지원하는 체험형 보안 분석 시스템을 구현하였습니다.
+본 연구는 사용자가 자신의 비밀번호 보안 수준을
+직접 확인하고 데이터 기반 분석을 통해
+안전한 디지털 환경을 구축할 수 있도록 지원하는
+체험형 보안 분석 시스템 구현을 목표로 하였습니다.
 
 </p>
 
