@@ -1,5 +1,6 @@
 import streamlit as st
 import math
+import plotly.graph_objects as go
 
 st.set_page_config(page_title="보안 연구 상세 보고서",layout="wide")
 
@@ -106,6 +107,7 @@ if menu=="서론: 연구 배경":
 elif menu=="본론 1: 이론적 배경":
     st.title("📖 이론적 배경 상세")
     c1,c2=st.columns(2)
+
     with c1:
         st.markdown("""
 <div class="content-box">
@@ -116,6 +118,7 @@ elif menu=="본론 1: 이론적 배경":
 </ul>
 </div>
 """,unsafe_allow_html=True)
+
     with c2:
         st.markdown("""
 <div class="content-box">
@@ -127,8 +130,10 @@ elif menu=="본론 1: 이론적 배경":
 </div>
 """,unsafe_allow_html=True)
 
+
 elif menu=="본론 2: 실태 및 문제점":
     st.title("⚠️ 현황 및 문제점 분석")
+
     st.markdown("""
 <div class="content-box">
 <h3>사용자 보안 실태: 편리함의 역설</h3>
@@ -139,8 +144,8 @@ elif menu=="본론 2: 실태 및 문제점":
 </p>
 </div>
 """,unsafe_allow_html=True)
-    c1,c2=st.columns(2)
 
+    c1,c2=st.columns(2)
 
     with c1:
         st.markdown("""
@@ -159,10 +164,11 @@ elif menu=="본론 2: 실태 및 문제점":
 <h3>인지적 취약점</h3>
 <ul>
 <li><b>가이드라인 부재:</b> 무엇이 안전한지에 대한 구체적 기준을 체감할 기회 부족.</li>
-<li><b>행위와 인식의 간극:</b> 보안의 중요성은 알지만, 실천 방법의 정교함이 결여됨.</li>
+<li><b>행위와 인식의 간극:</b> 보안의 중요성은 알지만 실천 방법의 정교함이 결여됨.</li>
 </ul>
 </div>
 """,unsafe_allow_html=True)
+
 
 elif menu=="본론 3: 해결 방안 및 구현":
     st.title("💡 개선 방안 및 기술 스택")
@@ -188,20 +194,28 @@ elif menu=="본론 3: 해결 방안 및 구현":
 </div>
 """,unsafe_allow_html=True)
 
+
 elif menu=="시뮬레이션: 보안 실증":
     st.title("🛡️ 실시간 보안성 시뮬레이터")
 
     pw=st.text_input("🔑 테스트할 비밀번호를 입력하세요",type="password")
 
     if pw:
+
+        length_score=min(len(pw)*10,100)
+        upper_score=100 if pw.isupper() else 50 if any(c.isupper() for c in pw) else 0
+        lower_score=100 if pw.islower() else 50 if any(c.islower() for c in pw) else 0
+        digit_score=100 if any(c.isdigit() for c in pw) else 0
+        special_score=100 if any(not c.isalnum() for c in pw) else 0
+
         score=min(
-            len(pw)*5+
-            sum([
-                pw.islower(),
-                pw.isupper(),
-                any(c.isdigit() for c in pw),
-                any(not c.isalnum() for c in pw)
-            ])*10,
+            int(
+                length_score*0.35+
+                upper_score*0.15+
+                lower_score*0.15+
+                digit_score*0.15+
+                special_score*0.20
+            ),
             100
         )
 
@@ -243,4 +257,139 @@ elif menu=="시뮬레이션: 보안 실증":
 </div>
 """,unsafe_allow_html=True)
 
-            st.progress(score/100)
+        st.progress(score/100)
+
+
+        st.markdown("---")
+
+        st.subheader("📡 보안 요소 분석 레이더")
+
+        radar_categories=[
+            "길이",
+            "대문자",
+            "소문자",
+            "숫자",
+            "특수문자"
+        ]
+
+        radar_values=[
+            length_score,
+            upper_score,
+            lower_score,
+            digit_score,
+            special_score
+        ]
+
+        radar_values.append(radar_values[0])
+        radar_categories.append(radar_categories[0])
+
+        fig=go.Figure(
+            data=[
+                go.Scatterpolar(
+                    r=radar_values,
+                    theta=radar_categories,
+                    fill="toself",
+                    line=dict(
+                        color="#38bdf8",
+                        width=3
+                    )
+                )
+            ]
+        )
+
+        fig.update_layout(
+            polar=dict(
+                bgcolor="#0f172a",
+                radialaxis=dict(
+                    visible=True,
+                    range=[0,100],
+                    color="#cbd5e1"
+                ),
+                angularaxis=dict(
+                    color="#cbd5e1"
+                )
+            ),
+            showlegend=False,
+            height=450,
+            margin=dict(
+                l=40,
+                r=40,
+                t=40,
+                b=40
+            ),
+            paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(
+                color="#e2e8f0"
+            )
+        )
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
+
+
+        st.markdown("---")
+
+        st.subheader("⏱️ 예상 무차별 대입 공격 시간")
+
+
+        charset=0
+
+        if any(c.islower() for c in pw):
+            charset+=26
+
+        if any(c.isupper() for c in pw):
+            charset+=26
+
+        if any(c.isdigit() for c in pw):
+            charset+=10
+
+        if any(not c.isalnum() for c in pw):
+            charset+=32
+
+
+        combinations=charset**len(pw)
+
+
+        # 초당 10억회 대입 기준
+        attack_seconds=combinations/1_000_000_000
+
+
+        if attack_seconds<60:
+            attack_time=f"{attack_seconds:.2f}초"
+
+        elif attack_seconds<3600:
+            attack_time=f"{attack_seconds/60:.2f}분"
+
+        elif attack_seconds<86400:
+            attack_time=f"{attack_seconds/3600:.2f}시간"
+
+        elif attack_seconds<31536000:
+            attack_time=f"{attack_seconds/86400:.2f}일"
+
+        else:
+            attack_time=f"{attack_seconds/31536000:.2f}년"
+
+
+        st.markdown(f"""
+<div class="content-box">
+
+<h3>🔓 공격 시뮬레이션 결과</h3>
+
+<p>
+현재 비밀번호의 가능한 조합 수:
+<b>{combinations:,}</b>
+</p>
+
+<p>
+가정:
+초당 10억 번의 대입 공격 수행
+</p>
+
+<h2 style="color:#38bdf8;">
+예상 공격 시간 : {attack_time}
+</h2>
+
+</div>
+""",unsafe_allow_html=True)
