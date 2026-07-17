@@ -1,48 +1,73 @@
 import streamlit as st
 
-st.set_page_config(page_title="나침반 프로젝트 상세 연구 발표", layout="wide")
+st.set_page_config(page_title="나침반 프로젝트 연구 발표", layout="wide")
 
 # 스타일 정의
 st.markdown("""
 <style>
 .stApp { background: #0f172a; color: #f1f5f9; }
-.card { background: #1e293b; padding: 25px; border-radius: 20px; border-left: 5px solid #38bdf8; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-h1, h2, h3 { color: #38bdf8; }
-.content-text { font-size: 1.1em; line-height: 1.6; }
+.card { background: #1e293b; padding: 20px; border-radius: 15px; border-left: 5px solid #38bdf8; margin-bottom: 15px; }
+h2 { color: #38bdf8; }
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.title("📑 나침반 프로젝트 상세")
-menu = st.sidebar.radio("슬라이드 이동", ["서론: 연구 동기 및 목적", "본론: HWPX 데이터 패키지 분석", "본론: 기술적 구조 상세", "결론: 연구 의의", "시뮬레이션: 보안 분석"])
+st.sidebar.title("📑 나침반 프로젝트 발표")
+menu = st.sidebar.radio("슬라이드 이동", ["서론", "본론: 이론 및 실태", "본론: 문제점 및 해결", "본론: 개선 및 구현", "시뮬레이터"])
 
 # 1. 서론
-if menu == "서론: 연구 동기 및 목적":
-    st.title("🛡️ 서론: 연구의 출발점")
-    st.markdown('<div class="card content-text"><h2>연구 동기</h2>디지털 환경에서 계정 탈취의 주요 원인인 취약한 비밀번호 문제의 심각성을 인식하고, 정보 보안의 기초를 탐구하고자 함.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="card content-text"><h2>연구 목적</h2>HWPX 파일과 같은 복잡한 디지털 문서 패키지의 구조를 분석하여, 정보 보안을 위한 체계적인 데이터 관리 모델과 보안성 평가의 필요성을 제시함[cite: 1].</div>', unsafe_allow_html=True)
+if menu == "서론":
+    st.title("🛡️ 서론: 연구의 배경")
+    st.markdown('<div class="card"><h2>연구 동기 및 목적</h2>비밀번호는 인가자와 침입자를 구분하는 첫 번째 방어선입니다. 본 연구는 KISA의 안전 가이드를 기반으로, 사용자가 보안성을 직관적으로 이해하고 실천할 수 있는 데이터 기반의 해결책을 제시하는 데 목적이 있습니다.</div>', unsafe_allow_html=True)
 
-# 2. 본론: HWPX 패키지 분석
-elif menu == "본론: HWPX 데이터 패키지 분석":
-    st.title("⚙️ 본론: 연구 대상 HWPX 패키지")
-    st.markdown('<div class="card content-text"><h2>데이터 구조의 이해</h2>연구 대상인 HWPX 파일은 단일 파일이 아니라, 여러 XML 파일이 패키징된 복합적인 디지털 구조를 가짐[cite: 1]. 문서 내 데이터의 파편화와 통합 관리 방식은 정보 보안의 원리와 맞닿아 있음[cite: 1].</div>', unsafe_allow_html=True)
-    st.markdown('<div class="card content-text"><h2>핵심 구성 요소</h2><ul><li><b>XML 기반 데이터:</b> 문서의 내용은 다수의 XML 파일로 분할되어 처리됨[cite: 1].</li><li><b>리소스 무결성:</b> container.rdf 및 container.xml을 통해 전체 문서의 리소스 종속성을 관리함[cite: 1].</li><li><b>동적 제어:</b> 스크립트(Scripts)와 설정 파일(settings.xml)이 문서의 동적 동작을 제어함[cite: 1].</li></ul></div>', unsafe_allow_html=True)
+# 2. 본론 1: 이론 및 실태
+elif menu == "본론: 이론 및 실태":
+    st.title("📖 이론적 배경 및 실태 조사")
+    st.markdown("""
+    <div class="card">
+    <h3>1. 이론적 배경</h3>
+    * <b>공격 원리:</b> 무차별 대입 공격은 경우의 수에 의존하며, 문자 집합(N)과 길이(L)의 지수 관계($N^L$)에 따라 해킹 시간이 결정됩니다.
+    * <b>수학적 지표:</b> 보안성은 문자 집합 크기와 길이의 함수로 표현되며, 이는 시뮬레이터의 핵심 논리입니다.
+    </div>
+    <div class="card">
+    <h3>2. 관리 실태</h3>
+    * 편리함을 위해 숫자 위주의 비밀번호를 여러 사이트에서 중복 사용하는 경향이 확인됨.
+    * 보안 의식과 실제 설정 행위 사이에 큰 인지적 간극이 존재합니다.
+    </div>
+    """)
 
-# 3. 본론: 기술적 상세
-elif menu == "본론: 기술적 구조 상세":
-    st.title("🔍 본론: 상세 구조 및 메타데이터")
-    st.markdown('<div class="card content-text"><h2>상세 분석 데이터[cite: 1]</h2><ul><li><b>container.xml:</b> 전체 패키지의 메타데이터 정의 및 종속성 관리의 핵심[cite: 1].</li><li><b>manifest.xml:</b> 문서 내부의 콘텐츠 정보를 구체적으로 기술함[cite: 1].</li><li><b>section0.xml:</b> 실제 본문의 데이터가 담긴 영역으로 문서의 핵심 정보를 보유함[cite: 1].</li><li><b>header.xml & content.hpf:</b> 문서의 레이아웃 헤더 및 패키징 스키마를 정의하여 데이터 정합성을 확보함[cite: 1].</li></ul></div>', unsafe_allow_html=True)
+# 3. 본론 2: 문제점 및 해결사례
+elif menu == "본론: 문제점 및 해결":
+    st.title("⚠️ 문제점 및 우수 사례 분석")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown('<div class="card"><h3>문제점 도출</h3><ul><li><b>기술적:</b> 단순 비밀번호는 사전 공격 등에 매우 취약함.</li><li><b>인지적:</b> 안전한 기준에 대한 체계적 정보 부족으로 사용자가 어려움을 겪음.</li></ul></div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown('<div class="card"><h3>우수 사례</h3><ul><li>다중 인증(MFA/2FA) 도입</li><li>비밀번호 관리자(Password Manager) 활용</li><li>웹사이트별 강력한 유효성 검증 정책</li></ul></div>', unsafe_allow_html=True)
 
-# 4. 결론
-elif menu == "결론: 연구 의의":
-    st.title("🎯 결론: 연구의 의의")
-    st.markdown('<div class="card content-text"><h2>문서 보안과 정보 시스템</h2>HWPX 파일의 XML 패키징 방식은 데이터의 구조적 안전성을 확보하는 중요한 사례임[cite: 1].</div>', unsafe_allow_html=True)
-    st.markdown('<div class="card content-text"><h2>종합 요약</h2>정보 보안은 파편화된 리소스들을 체계적으로 통합하고, 각 메타데이터의 정합성을 유지하는 것에서 시작됨[cite: 1]. 본 연구는 데이터 패키지 구조 분석을 통해 정보 보안의 기술적 토대를 확인하였음[cite: 1].</div>', unsafe_allow_html=True)
+# 4. 본론 3: 개선방안 및 구현 도구
+elif menu == "본론: 개선 및 구현":
+    st.title("💡 개선 방안 및 기술 스택")
+    st.markdown("""
+    <div class="card">
+    <h3>데이터 기반 실시간 보안 시뮬레이션</h3>
+    사용자가 비밀번호를 입력함과 동시에 보안성을 시각화하여 '단순 암기'가 아닌 '직접 체험'형 보안 교육을 수행합니다.
+    </div>
+    <div class="card">
+    <h3>핵심 기술 스택 및 구현</h3>
+    <ul>
+    <li><b>Streamlit:</b> 파이썬 기반의 대화형 보안성 평가 인터페이스 구축.</li>
+    <li><b>GitHub:</b> 코드 버전 관리 및 지속 가능한 프로젝트 개발 환경 구축.</li>
+    <li><b>구현 효과:</b> 능동적인 보안 습관 형성을 유도하는 혁신적인 개선책 제시.</li>
+    </ul>
+    </div>
+    """)
 
-# 5. 시뮬레이션
-elif menu == "시뮬레이션: 보안 분석":
-    st.title("🛡️ 보안성 시뮬레이터")
+# 5. 시뮬레이터
+elif menu == "시뮬레이터":
+    st.title("🛡️ 보안성 시뮬레이터 데모")
     pw = st.text_input("비밀번호 입력", type="password")
     if pw:
-        score = min(len(pw) * 10, 100)
-        st.markdown(f'<div class="card"><h2>분석 결과</h2><p>입력된 정보의 길이 기반 보안 점수: <b>{score}/100</b></p><p>파일 패키지 구조 분석의 원리에 따라 정보의 복잡도와 정합성을 평가합니다.</p></div>', unsafe_allow_html=True)
+        # 이론적 배경에 따른 간이 계산
+        score = min(len(pw) * 10, 100) 
+        st.write(f"현재 보안 점수: {score}/100")
         st.progress(score / 100)
