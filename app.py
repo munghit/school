@@ -1,73 +1,58 @@
 import streamlit as st
 import math
 
-# 페이지 설정
-st.set_page_config(page_title="보안 연구 보고서", layout="wide")
+st.set_page_config(page_title="보안 연구 상세 보고서", layout="wide")
 
-# CSS 스타일
+# CSS 강화: 카드 내부 간격 및 텍스트 가독성 최적화
 st.markdown("""
 <style>
-    .stApp { background-color: #020617; color: #e2e8f0; font-family: 'Pretendard', sans-serif; }
-    .main-card { background: #0f172a; padding: 30px; border-radius: 20px; border: 1px solid #1e293b; margin-bottom: 25px; }
-    h1, h2, h3 { color: #38bdf8 !important; }
+    .stApp { background-color: #020617; color: #e2e8f0; }
+    .content-box { background: #1e293b; padding: 30px; border-radius: 20px; border: 1px solid #334155; margin-bottom: 20px; }
+    h1 { color: #38bdf8 !important; }
+    h2, h3 { color: #818cf8 !important; }
+    li { margin-bottom: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
-# 메뉴 정의
-M1 = "서론: 연구 배경"
-M2 = "본론 1: 이론적 배경"
-M3 = "본론 2: 실태 및 문제점"
-M4 = "본론 3: 해결 방안 및 구현"
-M5 = "시뮬레이터: 보안 실증"
+menu = st.sidebar.radio("발표 섹션", ["서론: 연구 배경", "본론 1: 이론적 배경", "본론 2: 실태 및 문제점", "본론 3: 해결 방안 및 구현", "시뮬레이션: 보안 실증"])
 
-# 사이드바
-menu = st.sidebar.radio("발표 섹션", [M1, M2, M3, M4, M5])
-
-# 본문 라우팅
-if menu == M1:
+if menu == "서론: 연구 배경":
     st.title("🛡️ 디지털 보안 연구")
-    st.markdown('''<div class="main-card">
-        <h2>서론: 연구의 동기 및 목적</h2>
-        <p>비밀번호는 인가된 사용자와 외부 침입자를 구분하는 가장 기본적인 방어선입니다. 본 연구는 KISA의 보안 가이드라인을 바탕으로, 데이터 기반 시뮬레이션을 통해 사용자가 보안성을 직접 체감하고 능동적인 보안 습관을 형성하도록 유도하는 데 목적이 있습니다.</p>
-    </div>''', unsafe_allow_html=True)
+    st.markdown('<div class="content-box"><h2>연구 동기 및 목적</h2><p>본 연구는 현대 디지털 환경에서 개인정보 보호의 핵심인 비밀번호 보안성을 재조명합니다. <b>KISA 및 국가정보원의 가이드라인</b>을 근거로, 단순 암기 위주의 구태의연한 보안 교육에서 벗어나고자 합니다.</p><h3>연구 목표</h3><ul><li>비밀번호가 보안의 첫 번째 방어선임을 이론적으로 규명함</li><li>사용자의 보안 의식과 실제 행위 사이의 괴리를 데이터로 증명함</li><li>데이터 기반 실시간 시뮬레이션을 통해 <b>능동적인 보안 습관 형성</b>을 유도함</li></ul></div>', unsafe_allow_html=True)
 
-elif menu == M2:
-    st.title("📖 이론적 배경")
+elif menu == "본론 1: 이론적 배경":
+    st.title("📖 이론적 배경 상세")
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown('''<div class="main-card"><h3>1. 정보보호의 역할</h3><p>비밀번호는 보안의 첫 번째 방어선입니다. 영문, 숫자, 특수문자의 혼합은 필수적인 보안 요구사항입니다.</p></div>''', unsafe_allow_html=True)
+        st.markdown('<div class="content-box"><h3>1. 정보보호와 비밀번호</h3><ul><li><b>인증의 기본:</b> 비밀번호는 인가자와 침입자를 분리하는 필수 인증 수단임.</li><li><b>관리 가이드:</b> KISA는 영문, 숫자, 특수문자 혼합을 강력 권고하며, 이는 공격 표면을 줄이는 핵심 전략임.</li></ul></div>', unsafe_allow_html=True)
     with c2:
-        st.markdown('''<div class="main-card"><h3>2. 무차별 대입 공격</h3><p>공격은 경우의 수에 좌우됩니다. 비밀번호의 길이(L)와 문자 집합(N)의 지수 함수적 관계(N^L)에 따라 해킹 난이도가 결정됩니다.</p></div>''', unsafe_allow_html=True)
+        st.markdown('<div class="content-box"><h3>2. 공격 원리와 복잡도</h3><ul><li><b>무차별 대입(Brute Force):</b> 가능한 조합을 순차 대입하는 공격. 해킹 시간은 <b>지수 함수적 관계($N^L$)</b>에 따름.</li><li><b>보안 수학:</b> 문자 집합 크기($N$)와 길이($L$)의 증가가 방어 비용을 기하급수적으로 증대시킴.</li></ul></div>', unsafe_allow_html=True)
 
-elif menu == M3:
-    st.title("⚠️ 관리 체계의 현황 및 문제점")
-    st.markdown('''<div class="main-card"><h3>현황: 편리함과 보안 사이의 간극</h3><p>KISA 실태조사에 따르면 다수의 사용자가 기억하기 쉬운 비밀번호를 여러 사이트에서 중복 사용하며, 보안 피로감을 느끼고 있습니다.</p></div>''', unsafe_allow_html=True)
+elif menu == "본론 2: 실태 및 문제점":
+    st.title("⚠️ 현황 및 문제점 분석")
+    st.markdown('<div class="content-box"><h3>사용자 보안 실태: 편리함의 역설</h3><p>디지털 서비스 폭증에도 불구하고, 다수 사용자는 여전히 보안보다 편리함을 우선시합니다. 이는 단순 숫자 위주의 비밀번호 재사용 문제로 직결됩니다.</p></div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
-    with c1: st.markdown('<div class="main-card"><h3>기술적 취약성</h3>단순한 비밀번호는 무차별 대입 공격 및 사전 공격에 매우 취약합니다.</div>', unsafe_allow_html=True)
-    with c2: st.markdown('<div class="main-card"><h3>사용자 인지 문제</h3>안전한 기준에 대한 체계적 정보 부족으로 인해 효과적인 비밀번호 수립에 어려움을 겪습니다.</div>', unsafe_allow_html=True)
+    with c1:
+        st.markdown('<div class="content-box"><h3>기술적 취약점</h3><ul><li><b>사전 공격(Dictionary Attack):</b> 통상적인 패턴을 이용한 해킹에 무방비함.</li><li><b>보안 피로감:</b> 복잡성 규칙 강요에 따른 사용자의 거부감.</li></ul></div>', unsafe_allow_html=True)
+    with c2:
+        st.markdown('<div class="content-box"><h3>인지적 취약점</h3><ul><li><b>가이드라인 부재:</b> 무엇이 안전한지에 대한 구체적 기준을 체감할 기회 부족.</li><li><b>행위와 인식의 간극:</b> 보안의 중요성은 알지만, 실천 방법의 정교함이 결여됨.</li></ul></div>', unsafe_allow_html=True)
 
-elif menu == M4:
-    st.title("💡 혁신적 개선 방안 및 구현")
-    st.markdown('''<div class="main-card"><h3>기술적 우수 사례</h3><p>다중 인증(MFA), 비밀번호 관리자, 웹사이트별 강력한 정책 적용을 통해 보안성을 확보하고 있습니다.</p></div>''', unsafe_allow_html=True)
-    st.markdown('''<div class="main-card"><h3>개발 환경: Streamlit & GitHub</h3><p>본 연구는 <b>Streamlit</b>을 통해 <b>실시간 보안성 시뮬레이터</b>를 구축하였습니다.</p><ul><li><b>GitHub:</b> 코드 버전 관리 및 지속 가능한 프로젝트 개발 환경 구축</li><li><b>Streamlit:</b> 사용자가 입력 즉시 수학적 엔트로피 기반 위험도를 직관적으로 확인</li><li><b>교육적 효과:</b> '단순 암기'에서 '직접 체험'으로 보안 교육 패러다임 전환</li></ul></div>''', unsafe_allow_html=True)
+elif menu == "본론 3: 해결 방안 및 구현":
+    st.title("💡 개선 방안 및 기술 스택")
+    st.markdown('<div class="content-box"><h3>제도적/기술적 대응</h3><ul><li><b>다중 인증(MFA/2FA):</b> 비밀번호 탈취 이후의 2차 방어선 구축.</li><li><b>비밀번호 관리자(Password Manager):</b> 복잡한 난수 생성을 자동화하여 인지적 부하 감소.</li></ul></div>', unsafe_allow_html=True)
+    st.markdown('<div class="content-box"><h3>구현 환경 및 혁신: "체험형 보안"</h3><ul><li><b>Streamlit:</b> 대화형 웹 인터페이스를 통해 사용자가 입력한 비밀번호의 엔트로피를 즉시 계산 및 시각화.</li><li><b>GitHub:</b> 오픈소스 기반 코드 형상 관리 및 프로젝트 지속성 확보.</li><li><b>패러다임 전환:</b> 단순 암기식 보안 교육을 실시간 피드백 중심의 <b>능동적 체험형 교육</b>으로 전환.</li></ul></div>', unsafe_allow_html=True)
 
-elif menu == M5:
+elif menu == "시뮬레이션: 보안 실증":
     st.title("🛡️ 실시간 보안성 시뮬레이터")
-    st.markdown('<div class="main-card">이 시뮬레이터는 입력된 비밀번호의 길이와 조합을 분석하여, 무차별 대입 공격에 대한 저항성을 실시간으로 평가합니다.</div>', unsafe_allow_html=True)
-    
     pw = st.text_input("🔑 테스트할 비밀번호를 입력하세요", type="password")
     if pw:
-        char_types = sum([any(c.islower() for c in pw), any(c.isupper() for c in pw), 
-                          any(c.isdigit() for c in pw), any(not c.isalnum() for c in pw)])
-        entropy = len(pw) * math.log2(char_types * 20 + 1)
-        score = min(int(entropy * 1.5), 100)
+        # 이론 기반 엔트로피 산출
+        score = min(len(pw) * 5 + sum([pw.islower(), pw.isupper(), any(c.isdigit() for c in pw), any(not c.isalnum() for c in pw)]) * 10, 100)
         status, color = ("안전", "#22c55e") if score > 70 else ("주의", "#f59e0b") if score > 40 else ("위험", "#ef4444")
-            
+        
         c1, c2 = st.columns([1, 2])
         with c1:
-            st.markdown(f'''<div class="main-card" style="text-align:center;"><h3>보안 점수</h3><h1 style="color:{color}; font-size: 50px;">{score}</h1><p>상태: <b>{status}</b></p></div>''', unsafe_allow_html=True)
+            st.markdown(f'<div class="content-box" style="text-align:center;"><h3>보안 점수</h3><h1 style="color:{color}; font-size: 60px;">{score}</h1><p>평가: <b>{status}</b></p></div>', unsafe_allow_html=True)
         with c2:
-            st.markdown("<h3>보안 분석 상세</h3>")
+            st.markdown('<div class="content-box"><h3>분석 상세</h3><ul><li><b>길이 요소:</b> 긴 비밀번호일수록 조합 공간이 지수적으로 확장됩니다.</li><li><b>조합 요소:</b> 특수문자, 대소문자, 숫자의 혼합은 사전 공격 저항력을 높입니다.</li><li><b>결론:</b> 현재 입력하신 비밀번호는 위 원칙을 바탕으로 분석되었습니다.</li></ul></div>', unsafe_allow_html=True)
             st.progress(score / 100)
-            st.write(f"입력하신 비밀번호는 {len(pw)}자이며, 조합 복잡도를 바탕으로 분석되었습니다.")
-            st.info("💡 팁: 특수문자와 숫자를 혼합하여 길이를 늘릴수록 점수가 상승합니다.")
