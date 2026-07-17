@@ -486,21 +486,84 @@ elif menu=="🧪 실험 및 결과":
 
 
         with c2:
+has_upper=any(c.isupper() for c in pw)
+has_lower=any(c.islower() for c in pw)
+has_digit=any(c.isdigit() for c in pw)
+has_special=any(not c.isalnum() for c in pw)
 
-            st.markdown("""
+missing=[]
+
+if not has_upper:
+    missing.append("대문자")
+
+if not has_lower:
+    missing.append("소문자")
+
+if not has_digit:
+    missing.append("숫자")
+
+if not has_special:
+    missing.append("특수문자")
+
+
+if len(pw)>=12:
+    length_result="충분한 길이입니다."
+
+elif len(pw)>=8:
+    length_result="보통 수준의 길이입니다."
+
+else:
+    length_result="길이가 짧아 보완이 필요합니다."
+
+
+if len(missing)==0:
+    diversity_result="문자 조합이 균형 있게 구성되어 있습니다."
+else:
+    diversity_result=f"부족한 요소: {', '.join(missing)}"
+
+
+st.markdown(f"""
 <div class="content-box">
 
-<h2>분석 결과</h2>
+<h2>🔍 입력 비밀번호 분석 결과</h2>
 
 <ul>
-<li>비밀번호 길이 기반 안정성 평가</li>
-<li>문자 조합 다양성 분석</li>
-<li>공격 가능성 및 위험 수준 계산</li>
+
+<li>
+<b>비밀번호 길이:</b>
+{len(pw)}자리
+<br>
+{length_result}
+</li>
+
+<li>
+<b>문자 구성:</b>
+<br>
+{diversity_result}
+</li>
+
+<li>
+<b>종합 평가:</b>
+<br>
+현재 입력된 비밀번호는
+<b style="color:{color}">
+{status}
+</b>
+수준으로 평가됩니다.
+</li>
+
+<li>
+<b>개선 방향:</b>
+<br>
+{("현재 구성 요소가 모두 포함되어 보안성이 높습니다."
+if len(missing)==0
+else " / ".join(missing)+" 요소를 추가하면 보안성이 향상됩니다.")}
+</li>
+
 </ul>
 
 </div>
 """,unsafe_allow_html=True)
-
 
         st.progress(score/100)
 
