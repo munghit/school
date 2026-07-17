@@ -75,11 +75,40 @@ elif menu == "본론 3: 해결 방안 및 구현":
         </ul>
     </div>''', unsafe_allow_html=True)
 
+
 elif menu == "시뮬레이션: 보안 실증":
     st.title("🛡️ 실시간 보안성 시뮬레이터")
-    pw = st.text_input("🔑 비밀번호 입력", type="password")
+    st.markdown('<div class="main-card">이 시뮬레이터는 입력된 비밀번호의 길이와 조합을 분석하여, 무차별 대입 공격에 대한 저항성을 실시간으로 평가합니다.</div>', unsafe_allow_html=True)
+    
+    pw = st.text_input("🔑 테스트할 비밀번호를 입력하세요", type="password")
+    
     if pw:
-        entropy = len(pw) * 5
-        score = min(entropy, 100)
-        st.markdown(f'<div class="main-card"><h3>분석 결과: {score}/100점</h3></div>', unsafe_allow_html=True)
-        st.progress(score / 100)
+        # 이론적 배경에 따른 보안 강도 계산
+        char_types = sum([any(c.islower() for c in pw), any(c.isupper() for c in pw), 
+                          any(c.isdigit() for c in pw), any(not c.isalnum() for c in pw)])
+        entropy = len(pw) * math.log2(char_types * 20 + 1)
+        score = min(int(entropy * 1.5), 100)
+        
+        # 위험도 평가 로직
+        if score > 70:
+            status, color = "안전", "#22c55e"
+        elif score > 40:
+            status, color = "주의", "#f59e0b"
+        else:
+            status, color = "위험", "#ef4444"
+            
+        # 시각화 UI
+        c1, c2 = st.columns([1, 2])
+        with c1:
+            st.markdown(f'''
+                <div class="main-card" style="text-align:center;">
+                    <h3>보안 점수</h3>
+                    <h1 style="color:{color}; font-size: 50px;">{score}</h1>
+                    <p>상태: <b>{status}</b></p>
+                </div>
+            ''', unsafe_allow_html=True)
+        with c2:
+            st.markdown("<h3>보안 분석 상세</h3>")
+            st.progress(score / 100)
+            st.write(f"입력하신 비밀번호의 길이는 {len(pw)}자이며, 조합된 문자 집합의 복잡도를 바탕으로 분석되었습니다.")
+            st.info("💡 팁: 특수문자와 숫자를 혼합하여 길이를 늘릴수록 점수가 기하급수적으로 상승합니다.")
