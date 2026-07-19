@@ -470,7 +470,6 @@ UI
 </div>
 """,unsafe_allow_html=True)
 
-
 elif menu=="🧪 실험 및 결과":
 
     st.title("🧪 Password Security Analyzer")
@@ -496,23 +495,18 @@ elif menu=="🧪 실험 및 결과":
     )
 
     if pw:
-        # --- 수정된 계산 로직 시작 ---
+        # --- 수정된 계산 로직 (입력값에 맞게 실시간 반영) ---
         length = len(pw)
         has_upper = any(c.isupper() for c in pw)
         has_lower = any(c.islower() for c in pw)
         has_digit = any(c.isdigit() for c in pw)
         has_special = any(not c.isalnum() for c in pw)
 
-        # 길이 점수: 12자 이상이면 100점, 1자당 약 8점 배분
         length_score = min(length * 8, 100)
-        
-        # 구성 점수: 각 요소당 25점씩 최대 100점
         variety_score = (has_upper + has_lower + has_digit + has_special) * 25
-        
-        # 통합 점수: 길이 40%, 구성 60% 가중치
         score = int(length_score * 0.4 + variety_score * 0.6)
         score = min(score, 100)
-        # --- 수정된 계산 로직 끝 ---
+        # --------------------------------------------
 
         if score>=70:
             status="안전"
@@ -550,7 +544,7 @@ elif menu=="🧪 실험 및 결과":
             if not has_digit: missing.append("숫자")
             if not has_special: missing.append("특수문자")
 
-            result = f"부족 요소: {', '.join(missing)}" if missing else "모든 보안 요소 충족"
+            result=f"부족 요소: {', '.join(missing)}" if missing else "모든 보안 요소 충족"
 
             st.markdown(f"""
 <div class="content-box">
@@ -558,16 +552,90 @@ elif menu=="🧪 실험 및 결과":
 <h2>🔍 분석 결과</h2>
 
 <ul>
-<li><b>비밀번호 길이:</b> {length}자리</li>
-<li><b>문자 구성:</b> {result}</li>
-<li><b>평가 결과:</b> 현재 비밀번호는 <b style="color:{color}">{status}</b> 수준입니다.</li>
+
+<li>
+<b>비밀번호 길이:</b>
+{length}자리
+</li>
+
+<li>
+<b>문자 구성:</b>
+{result}
+</li>
+
+<li>
+<b>평가 결과:</b>
+현재 비밀번호는
+<b style="color:{color}">
+{status}
+</b>
+수준입니다.
+</li>
+
 </ul>
 
 </div>
 """,unsafe_allow_html=True)
 
         st.progress(score/100)
-        # 나머지 시각화 및 분석 코드는 기존과 동일하게 유지...
+        st.markdown("---")
+        st.subheader("📊 보안 요소 분석")
+
+        categories=["길이", "대문자", "소문자", "숫자", "특수문자"]
+        # 점수 재정의
+        values = [length_score, 100 if has_upper else 0, 100 if has_lower else 0, 100 if has_digit else 0, 100 if has_special else 0]
+
+        fig=go.Figure()
+        fig.add_trace(go.Scatterpolar(r=values, theta=categories, fill="toself", line=dict(color="#1976a8", width=3), fillcolor="rgba(25,118,168,0.18)"))
+        fig.update_layout(polar=dict(bgcolor="#ffffff", radialaxis=dict(visible=True, range=[0,100], color="#37474f"), angularaxis=dict(color="#37474f")), showlegend=False, height=480, paper_bgcolor="#ffffff")
+        st.plotly_chart(fig, use_container_width=True)
+
+        st.markdown("---")
+        st.subheader("🔐 엔트로피 분석")
+
+        charset = (26 if has_lower else 0) + (26 if has_upper else 0) + (10 if has_digit else 0) + (32 if has_special else 0)
+        entropy = length * math.log2(charset) if charset > 0 else 0
+
+        if entropy<40: entropy_status, entropy_color = "낮음", "#c62828"
+        elif entropy<70: entropy_status, entropy_color = "보통", "#ef6c00"
+        else: entropy_status, entropy_color = "높음", "#2e7d32"
+
+        st.markdown(f"""
+<div class="content-box">
+<h2>Password Entropy</h2>
+<h1 style="color:{entropy_color}">{entropy:.2f} bits</h1>
+<p>현재 엔트로피 수준: <b style="color:{entropy_color}">{entropy_status}</b></p>
+</div>
+""",unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.subheader("⚔️ 공격 유형별 위험도 분석")
+        attack1,attack2,attack3=st.columns(3)
+        dictionary = "🔴 높음" if length < 8 else "🟢 낮음"
+        brute = "🔴 높음" if entropy < 50 else ("🟡 보통" if entropy < 80 else "🟢 낮음")
+        pattern = "🔴 높음" if (pw.isdigit() or pw.lower()==pw) else "🟡 보통"
+
+        for col, title, val in zip([attack1, attack2, attack3], ["Dictionary Attack", "Brute Force", "Pattern Attack"], [dictionary, brute, pattern]):
+            with col:
+                st.markdown(f'<div class="metric-card"><h3>{title}</h3><div class="metric-number">{val}</div></div>', unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.subheader("⏱️ 무차별 대입 공격 시뮬레이션")
+        combinations = charset**length if charset > 0 else 0
+        attack_seconds = combinations/1_000_000_000
+        if attack_seconds < 60: attack_time = f"{attack_seconds:.2f}초"
+        elif attack_seconds < 3600: attack_time = f"{attack_seconds/60:.2f}분"
+        elif attack_seconds < 86400: attack_time = f"{attack_seconds/3600:.2f}시간"
+        elif attack_seconds < 31536000: attack_time = f"{attack_seconds/86400:.2f}일"
+        else: attack_time = f"{attack_seconds/31536000:.2f}년"
+
+        st.markdown(f"""
+<div class="content-box">
+<h2>공격 시뮬레이션 결과</h2>
+<ul><li>가능한 조합: <b>{combinations:,}</b></li></ul>
+<h1 style="color:#1976a8">예상 공격 시간 : {attack_time}</h1>
+</div>
+""",unsafe_allow_html=True)
 
 elif menu=="🎯 결론 및 의의":
 
