@@ -27,7 +27,7 @@ h3{
 }
 p,li{
     color:#455a64;
-    font-size:20px;
+    font-size:28px!important;
     line-height:1.7;
 }
 .content-box{
