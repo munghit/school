@@ -27,7 +27,7 @@ h3{
 }
 p,li{
     color:#455a64;
-    font-size:28px!important;
+    font-size:26px!important;
     line-height:1.7;
 }
 .content-box{
@@ -76,6 +76,10 @@ section[data-testid="stSidebar"]{
 section[data-testid="stSidebar"] label{
     color:#234e70!important;
     font-weight:700;
+    font-size:22px!important;
+}
+section[data-testid="stSidebar"] div[role="radiogroup"] label {
+    font-size:22px!important;
 }
 .stTextInput input{
     background:#ffffff!important;
